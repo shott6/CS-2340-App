@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (mUserView.getText().toString().equals(dummyUsername) && mPasswordView.getText().toString().equals(dummyPassword)) {
-                    Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     mUserView.setError("Invalid username");

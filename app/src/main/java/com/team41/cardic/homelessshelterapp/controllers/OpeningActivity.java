@@ -22,6 +22,14 @@ public class OpeningActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button RegisterButton = findViewById(R.id.RegisterButton);
+        RegisterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
 
