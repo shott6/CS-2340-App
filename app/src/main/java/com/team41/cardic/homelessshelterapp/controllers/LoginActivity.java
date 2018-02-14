@@ -199,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
         return password.equals("pass");
     }
 
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -345,6 +346,7 @@ public class LoginActivity extends AppCompatActivity {
             //showProgress(false);
         }
     }
+
 
 }
 
