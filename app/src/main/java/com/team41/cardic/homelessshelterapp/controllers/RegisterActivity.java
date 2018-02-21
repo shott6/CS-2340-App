@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         CheckBox admin = (CheckBox) findViewById(R.id.adminCheckbox);
         admin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                adminChecked = true;
+                adminChecked = ((CheckBox) view).isChecked();
             }
                                  });
 
@@ -79,11 +80,14 @@ public class RegisterActivity extends AppCompatActivity {
                 User user;
                 if (adminChecked) {
                     user = (User) new Admin(firstName, lastName, username, password);
-                } else {
+                    model.addUser(user);
+                } else
                     user = (User) new HomelessPerson(firstName, lastName, username, password);
+                    model.addUser(user);
                 }
-                model.getUsers();
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Log.d("thisone", user.toString());
+                //Log.d("Tag", model.getUsers());
+                Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
             }
         });

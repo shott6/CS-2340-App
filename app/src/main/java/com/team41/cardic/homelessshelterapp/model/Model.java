@@ -18,12 +18,12 @@ public class Model {
     private User currentUser;
 
     public boolean addUser(User user) {
-        users.add(user);
+        users.add((User) user);
         return true;
     }
 
-    public void getUsers() {
-        users.toString();
+    public String getUsers() {
+        return users.toString();
     }
 
 }
