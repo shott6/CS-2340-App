@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,35 +38,25 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via username/password.
+ * A login screen that offers registration via username/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
 
-    private static final String dummyUsername = "user";
-    private static final String dummyPassword = "pass";
+    // UI references.
 
-    private EditText mUserView;
-    private EditText mPasswordView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
+        // Set up the login form.
 
-        mUserView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
-
-        Button SignInButton = findViewById(R.id.sign_in_button);
-        SignInButton.setOnClickListener(new View.OnClickListener() {
+        Button RegisterButton = findViewById(R.id.RegisterButton);
+        RegisterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (mUserView.getText().toString().equals(dummyUsername) && mPasswordView.getText().toString().equals(dummyPassword)) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    mUserView.setError("Invalid username");
-                    mPasswordView.setError("Invalid password");
-                }
+                Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
+                startActivity(intent);
             }
         });
 
