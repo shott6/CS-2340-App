@@ -1,5 +1,6 @@
 package com.team41.cardic.homelessshelterapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,17 +14,19 @@ public class Model {
         return _instance;
     }
 
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
 
     private User currentUser;
 
     public boolean addUser(User user) {
-        users.add((User) user);
+        users.add(user);
         return true;
     }
 
     public String getUsers() {
         return users.toString();
     }
+
+    public List<User> getUserList(){return users;}
 
 }

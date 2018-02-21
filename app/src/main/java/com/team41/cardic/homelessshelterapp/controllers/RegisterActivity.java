@@ -80,13 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
                 User user;
                 if (adminChecked) {
                     user = (User) new Admin(firstName, lastName, username, password);
-                    model.addUser(user);
-                } else
+                } else {
                     user = (User) new HomelessPerson(firstName, lastName, username, password);
-                    model.addUser(user);
                 }
                 Log.d("thisone", user.toString());
-                //Log.d("Tag", model.getUsers());
+                model.addUser(user);
+                Log.d("Tag", "modelPrint: " + model.getUsers());
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
             }

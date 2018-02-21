@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.team41.cardic.homelessshelterapp.controllers.R;
+import com.team41.cardic.homelessshelterapp.model.Model;
+import com.team41.cardic.homelessshelterapp.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +63,27 @@ public class LoginActivity extends AppCompatActivity {
         Button SignInButton = findViewById(R.id.sign_in_button);
         SignInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (mUserView.getText().toString().equals(dummyUsername) && mPasswordView.getText().toString().equals(dummyPassword)) {
+                Model model = Model.getInstance();
+                boolean matched = false;
+                for (User user:model.getUserList()){
+                    if ((mUserView.getText().toString().equals(user.getUsername()) && (mPasswordView.getText().toString().equals(user.getPassword())))) {
+                        matched = true;
+                    }
+                }
+                if (matched) {
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     mUserView.setError("Invalid username");
                     mPasswordView.setError("Invalid password");
                 }
+                /*if (mUserView.getText().toString().equals(dummyUsername) && mPasswordView.getText().toString().equals(dummyPassword)) {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    mUserView.setError("Invalid username");
+                    mPasswordView.setError("Invalid password");
+                }*/
             }
         });
 
