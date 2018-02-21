@@ -27,10 +27,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.team41.cardic.homelessshelterapp.controllers.R;
+import com.team41.cardic.homelessshelterapp.model.Admin;
+import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
+import com.team41.cardic.homelessshelterapp.model.Model;
+import com.team41.cardic.homelessshelterapp.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,18 +49,41 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     // UI references.
-
+    boolean adminChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         // Set up the login form.
+        CheckBox admin = (CheckBox) findViewById(R.id.adminCheckbox);
+        admin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                adminChecked = true;
+            }
+                                 });
 
         Button RegisterButton = findViewById(R.id.RegisterButton);
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
+                Model model = Model.getInstance();
+                EditText mfirstName = (EditText) findViewById(R.id.firstName);
+                EditText mlastName = (EditText) findViewById(R.id.lastName);
+                EditText musername = (EditText) findViewById(R.id.username);
+                EditText mpassword = (EditText) findViewById(R.id.password);
+
+                String firstName = mfirstName.getText().toString();
+                String lastName = mlastName.getText().toString();
+                String username = musername.getText().toString();
+                String password = mpassword.getText().toString();
+                User user;
+                if (adminChecked) {
+                    user = (User) new Admin(firstName, lastName, username, password);
+                } else {
+                    user = (User) new HomelessPerson(firstName, lastName, username, password);
+                }
+                model.getUsers();
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
             }
         });

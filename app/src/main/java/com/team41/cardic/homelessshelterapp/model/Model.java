@@ -22,4 +22,8 @@ public class Model {
         return true;
     }
 
+    public void getUsers() {
+        users.toString();
+    }
+
 }

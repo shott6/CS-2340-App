@@ -11,6 +11,12 @@ public abstract class User {
     private String password;
 
 
+    public User(String _firstName, String _lastName, String _username, String _password) {
+        firstName = _firstName;
+        lastName = _lastName;
+        username = _username;
+        password = _password;
+    }
     /*
      * Getters and setters
     */
