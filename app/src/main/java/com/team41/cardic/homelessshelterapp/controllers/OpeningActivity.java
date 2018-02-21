@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.team41.cardic.homelessshelterapp.controllers.R;
+import com.team41.cardic.homelessshelterapp.controllers.LoginActivity;
 
 public class OpeningActivity extends AppCompatActivity {
 

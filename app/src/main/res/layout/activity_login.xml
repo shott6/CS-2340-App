@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context="com.team41.cardic.homelessshelterapp.controllers.LoginActivity">
+    tools:context="com.team41.cardic.homelessshelterapp.controllers.com.team41.cardic.homelessshelterapp.model.LoginActivity">
 
     <!-- Login progress -->
 
