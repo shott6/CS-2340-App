@@ -23,17 +23,27 @@ public class Model {
 
     private List<Shelter> shelters;
 
+    private Shelter currentShelter;
+
     private List<User> users;
 
-    private User currentUser;
-
     private Model() {
+
         users = new ArrayList<>();
+        shelters = new ArrayList<>();
     }
 
     public boolean addUser(User user) {
         users.add(user);
         return true;
+    }
+
+    public void setCurrentShelter(Shelter shelter) {
+        currentShelter = shelter;
+    }
+
+    public Shelter getCurrentShelter() {
+        return currentShelter;
     }
 
     public void addShelter(Shelter shelter) {shelters.add(shelter);}
