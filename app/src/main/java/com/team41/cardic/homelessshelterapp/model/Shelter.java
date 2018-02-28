@@ -5,20 +5,24 @@ package com.team41.cardic.homelessshelterapp.model;
  */
 
 public class Shelter {
+    private int uniqueKey;
     private String name;
-    private int capacity;
+    private String capacity;
     private String gender;
     private double longitude;
     private double latitude;
+    private String specialNotes;
     private String address;
     private String phoneNumber;
 
-    public Shelter(String _name, int _capacity, String _gender, double _longitude, double _latitude, String _address, String _phoneNumber) {
+    public Shelter(int _uniqueKey, String _name, String _capacity, String _gender, double _longitude, double _latitude, String _specialNotes, String _address, String _phoneNumber) {
+        uniqueKey = _uniqueKey;
         name = _name;
         capacity = _capacity;
         gender = _gender;
         longitude = _longitude;
         latitude = _latitude;
+        specialNotes = _specialNotes;
         address = _address;
         phoneNumber = _phoneNumber;
     }
@@ -26,6 +30,9 @@ public class Shelter {
     /**
      * Getters and setters
      */
+    public int getUniqueKey() {return uniqueKey; }
+    public void setUniqueKey(int newKey) {uniqueKey = newKey; }
+
     public String getName() {
         return name;
     }
@@ -33,10 +40,10 @@ public class Shelter {
         name = nameNew;
     }
 
-    public int getCapacity() {
+    public String getCapacity() {
         return capacity;
     }
-    public void setCapacity(int capacityNew) {
+    public void setCapacity(String capacityNew) {
         capacity = capacityNew;
     }
 
@@ -60,6 +67,9 @@ public class Shelter {
     public void setLatitude(double latitudeNew) {
         latitude = latitudeNew;
     }
+
+    public String getSpecialNotes() {return specialNotes; }
+    public void setSpecialNotes(String newSpecialNotes) {specialNotes = newSpecialNotes; }
 
     public String getAddress() {
         return address;
