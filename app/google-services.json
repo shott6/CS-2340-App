@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "62627021253",
+    "firebase_url": "https://cs-2340-app.firebaseio.com",
+    "project_id": "cs-2340-app",
+    "storage_bucket": "cs-2340-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62627021253:android:d8212d6884c50253",
+        "android_client_info": {
+          "package_name": "com.team41.cardic.homelessshelterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62627021253-tsvdmqd42o9oduk1sea1pna8eakl0rh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team41.cardic.homelessshelterapp",
+            "certificate_hash": "bd85eb1e5d99be0e47b84185c4cba58bbc8fbb9d"
+          }
+        },
+        {
+          "client_id": "62627021253-uquinq22djhg5j70l6tj904h9hche0do.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGrTOaYURg06optS8EBCnN7qy9Otly5Ys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62627021253-uquinq22djhg5j70l6tj904h9hche0do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

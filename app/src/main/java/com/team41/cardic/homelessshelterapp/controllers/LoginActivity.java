@@ -31,7 +31,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.team41.cardic.homelessshelterapp.controllers.R;
+import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.User;
 
@@ -60,16 +65,55 @@ public class LoginActivity extends AppCompatActivity {
         mUserView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
+
         Button SignInButton = findViewById(R.id.sign_in_button);
         SignInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Model model = Model.getInstance();
-                boolean matched = false;
+                FirebaseDatabase.getInstance().getReference().child("users").child(mUserView.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    Admin ref;
+                    String uRef;
+                    String pRef;
+                    boolean isAdmin;
+                    boolean matched = false;
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ref = dataSnapshot.getValue(Admin.class);
+                        if (ref == null) {
+                            mUserView.setError("Invalid username");
+                            mPasswordView.setError("Invalid password");
+                        } else {
+                            uRef = ref.getUsername();
+                            pRef = ref.getPassword();
+                            isAdmin = ref.getAdmin();
+                            if (mUserView.getText().toString().equals(uRef) && mPasswordView.getText().toString().equals(pRef)) {
+                                matched = true;
+                            }
+                            if (matched) {
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                mUserView.setError("Invalid username");
+                                mPasswordView.setError("Invalid password");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+                /**
                 for (User user:model.getUserList()){
                     if ((mUserView.getText().toString().equals(user.getUsername()) && (mPasswordView.getText().toString().equals(user.getPassword())))) {
                         matched = true;
                     }
                 }
+
                 if (matched) {
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);

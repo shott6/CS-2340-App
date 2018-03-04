@@ -32,6 +32,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // UI references.
     boolean adminChecked;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +82,13 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = mpassword.getText().toString();
                 User user;
                 if (adminChecked) {
-                    user = (User) new Admin(firstName, lastName, username, password);
+                    user = (User) new    Admin(firstName, lastName, username, password);
                 } else {
                     user = (User) new HomelessPerson(firstName, lastName, username, password);
                 }
                 Log.d("thisone", user.toString());
                 model.addUser(user);
+                writeNewUser(firstName, lastName, username, password);
                 Log.d("Tag", "modelPrint: " + model.getUsers());
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
@@ -98,5 +102,15 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void writeNewUser(String fName, String lName, String uName, String pWord) {
+        if (adminChecked) {
+            Admin toAdd = new Admin(fName, lName, uName, pWord);
+            mDatabase.child("users").child(uName).setValue(toAdd);
+        } else {
+            HomelessPerson toAdd = new HomelessPerson(fName, lName, uName, pWord);
+            mDatabase.child("users").child(uName).setValue(toAdd);
+        }
     }
 }

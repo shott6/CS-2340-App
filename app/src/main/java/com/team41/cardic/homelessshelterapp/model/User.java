@@ -9,13 +9,20 @@ public abstract class User {
     private String lastName;
     private String username;
     private String password;
+    private boolean isAdmin;
 
 
-    public User(String _firstName, String _lastName, String _username, String _password) {
+    public User(String _firstName, String _lastName, String _username, String _password, boolean admin) {
         firstName = _firstName;
         lastName = _lastName;
         username = _username;
         password = _password;
+        isAdmin = admin;
+
+    }
+
+    public User() {
+        this("Generic", "User", "user", "pass", false);
     }
     /*
      * Getters and setters
@@ -31,6 +38,9 @@ public abstract class User {
 
     public String getPassword() {return password;}
     public void setPassword(String _password) {password = _password;}
+
+    public boolean getAdmin() {return isAdmin;}
+    public void setAdmin(boolean admin) {isAdmin = admin;}
 
 
     @Override
