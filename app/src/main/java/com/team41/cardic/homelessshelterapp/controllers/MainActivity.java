@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = Integer.parseInt(tokens[0]);
                 double longitude = Double.parseDouble(tokens[4]);
                 double latitude = Double.parseDouble(tokens[5]);
-                Shelter shelter = new Shelter(id, tokens[1], tokens[2], tokens[3], longitude, latitude, tokens[6], tokens[7], tokens[8]);
+                Shelter shelter = new Shelter(id, tokens[1], tokens[2], tokens[3], longitude, latitude, tokens[7], tokens[6], tokens[8]);
                 Log.d("lookhere", shelter.toString());
                 model.addShelter(shelter);
                 line = br.readLine();
