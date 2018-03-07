@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context="com.team41.cardic.homelessshelterapp.controllers.com.team41.cardic.homelessshelterapp.model.LoginActivity">
+    tools:context="com.team41.cardic.homelessshelterapp.controllers.LoginActivity">
 
     <!-- Login progress -->
 
@@ -17,8 +17,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="Username"
         android:inputType="textPersonName"
-        android:text="Username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

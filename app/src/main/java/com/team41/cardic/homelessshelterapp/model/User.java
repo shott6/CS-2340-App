@@ -10,6 +10,8 @@ public abstract class User {
     private String username;
     private String password;
     private boolean isAdmin;
+    //accountState
+    //contactInfo
 
 
     public User(String _firstName, String _lastName, String _username, String _password, boolean admin) {

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.team41.cardic.homelessshelterapp.model.Model;
@@ -23,6 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner shelterSpinner;
+    private EditText searchBar;
     Model model = Model.getInstance();
     List<Shelter> shelters = model.getShelters();
     List<String> shelterNames = new ArrayList<>();
@@ -33,12 +35,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchBar = (EditText) findViewById(R.id.search_Bar);
+
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
             }
+        });
+
+        final Button searchButton = findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String searchString = searchBar.getText().toString();
+                Log.d("checkText", "search: " + searchString);
+                Intent intent = new Intent(getBaseContext(), SearchResultsActivity.class);
+                intent.putExtra("SEARCH_STRING", searchString);
+                startActivity(intent);
+            }
+
         });
 
         Button selectButton = findViewById(R.id.selectButton);
