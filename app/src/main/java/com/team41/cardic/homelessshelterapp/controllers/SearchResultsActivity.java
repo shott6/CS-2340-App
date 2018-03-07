@@ -4,6 +4,8 @@ import android.os.health.ServiceHealthStats;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.team41.cardic.homelessshelterapp.model.Filter;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
@@ -15,6 +17,8 @@ public class SearchResultsActivity extends AppCompatActivity {
     private String searchString;
     private Filter searchFilter = new Filter();
     private List<Shelter> searchResults = new ArrayList<>();
+    private Spinner resSpinner;
+    private List<String> shelterNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,5 +98,13 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         Log.d("checkFilter", "name search: " + searchResults.toString());
 
+        resSpinner = (Spinner) findViewById(R.id.resSpinner);
+        for (int i = 0; i < searchResults.size(); i++) {
+            shelterNames.add(searchResults.get(i).getName());
+        }
+
+        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, shelterNames);
+        shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        resSpinner.setAdapter(shelterAdapter);
     }
 }
