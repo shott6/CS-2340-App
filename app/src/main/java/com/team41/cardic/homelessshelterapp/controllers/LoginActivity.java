@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         Button SignInButton = findViewById(R.id.sign_in_button);
         SignInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Model model = Model.getInstance();
                 FirebaseDatabase.getInstance().getReference().child("users").child(mUserView.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                     Admin ref;
                     String uRef;
@@ -90,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                                 matched = true;
                             }
                             if (matched) {
+                                Model model = Model.getInstance();
+                                model.setCurrentUser(ref);
+                                Log.d("CHECKING", "currentUser: " + model.getCurrentUser().toString());
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
                             } else {

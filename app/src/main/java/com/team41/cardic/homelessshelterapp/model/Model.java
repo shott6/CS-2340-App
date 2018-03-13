@@ -27,6 +27,8 @@ public class Model {
 
     private List<User> users;
 
+    private User currentUser;
+
     private Model() {
 
         users = new ArrayList<>();
@@ -41,15 +43,16 @@ public class Model {
     public void setCurrentShelter(Shelter shelter) {
         currentShelter = shelter;
     }
-
     public Shelter getCurrentShelter() {
         return currentShelter;
     }
 
+    public void setCurrentUser(User user) {currentUser = user;}
+    public User getCurrentUser() {return  currentUser;}
+
     public void addShelter(Shelter shelter) {shelters.add(shelter);}
 
     public List<Shelter> getShelters() {return shelters;}
-
 
     public String getUsers() {
         return users.toString();

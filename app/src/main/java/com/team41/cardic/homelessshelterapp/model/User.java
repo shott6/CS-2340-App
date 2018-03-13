@@ -10,21 +10,22 @@ public abstract class User {
     private String username;
     private String password;
     private boolean isAdmin;
-    //accountState
+    private boolean accountLocked;
     //contactInfo
 
 
-    public User(String _firstName, String _lastName, String _username, String _password, boolean admin) {
+    public User(String _firstName, String _lastName, String _username, String _password, boolean admin, boolean _accountLocked) {
         firstName = _firstName;
         lastName = _lastName;
         username = _username;
         password = _password;
         isAdmin = admin;
+        accountLocked = _accountLocked;
 
     }
 
     public User() {
-        this("Generic", "User", "user", "pass", false);
+        this("Generic", "User", "user", "pass", false,  false);
     }
     /*
      * Getters and setters
@@ -43,6 +44,9 @@ public abstract class User {
 
     public boolean getAdmin() {return isAdmin;}
     public void setAdmin(boolean admin) {isAdmin = admin;}
+
+    public boolean getAccountState() {return accountLocked;}
+    public void setAccountState(boolean _accountLocked) {accountLocked = _accountLocked;}
 
 
     @Override
