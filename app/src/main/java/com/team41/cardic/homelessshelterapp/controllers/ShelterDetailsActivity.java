@@ -46,6 +46,7 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                             if (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString()) > 0) {
                                 person.setCheckedIn(true);
                                 person.setNumberCheckedIn(Integer.parseInt(numberCheckIn.getText().toString()));
+                                person.setCurrentShelter(model.getCurrentShelter());
                                 model.getCurrentShelter().setCapacity("" + (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString())));
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);

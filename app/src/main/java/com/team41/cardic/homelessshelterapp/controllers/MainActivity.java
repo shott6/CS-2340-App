@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (model.getCurrentUser() instanceof HomelessPerson) {
                     if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
-                        int newCapacity = Integer.parseInt(model.getCurrentShelter().getCapacity());
+                        int newCapacity = Integer.parseInt(((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getCapacity());
                         newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
-                        model.getCurrentShelter().setCapacity("" + newCapacity);
+                        ((HomelessPerson) model.getCurrentUser()).getCurrentShelter().setCapacity("" + newCapacity);
                         ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(0);
                         ((HomelessPerson) model.getCurrentUser()).setCheckedIn(false);
                         ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(null);
