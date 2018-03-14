@@ -11,9 +11,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,21 +31,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Spinner shelterSpinner;
+    Spinner shelterSpinner;
     private EditText searchBar;
     private TextView errorView;
     Model model = Model.getInstance();
-    List<Shelter> shelters = model.getShelters();
-    List<String> shelterNames = new ArrayList<>();
+    final List<Shelter> shelters = new ArrayList<>();
+    final List<String> shelterNames = new ArrayList<>();
+    BufferedReader br;
+    String line;
+    String cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        readShelterFile();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         searchBar = (EditText) findViewById(R.id.search_Bar);
         errorView = (TextView) findViewById(R.id.errorView);
+        this.readShelterFile();
 
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -83,52 +92,87 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        shelterSpinner = (Spinner) findViewById(R.id.shelterSpinner);
+
+        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shelterNames);
+        shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        shelterSpinner.setAdapter(shelterAdapter);
+
+        
+
         Button selectButton = findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int index = shelterNames.indexOf(shelterSpinner.getSelectedItem());
-                model.setCurrentShelter(shelters.get(index));
+                model.setCurrentShelter(shelters.get(shelterNames.indexOf(cur)));
                 Intent intent = new Intent(getBaseContext(), ShelterDetailsActivity.class);
                 startActivity(intent);
             }
         });
 
-        shelterSpinner = (Spinner) findViewById(R.id.shelterSpinner);
-        for (int i = 0; i < shelters.size(); i++) {
-            shelterNames.add(shelters.get(i).getName());
-        }
-
-        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, shelterNames);
-        shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        shelterSpinner.setAdapter(shelterAdapter);
     }
 
     public void readShelterFile() {
 
-        try {
-            InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
+        sheltListRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
 
-            String line;
-            line = br.readLine();
-            line = br.readLine();
-            while(line != null) {
-                //Log.d("test", line);
-                String[] tokens = line.split(("#"));
-                
-                int id = Integer.parseInt(tokens[0]);
-                double longitude = Double.parseDouble(tokens[4]);
-                double latitude = Double.parseDouble(tokens[5]);
-                Shelter shelter = new Shelter(id, tokens[1], tokens[2], tokens[3], longitude, latitude, tokens[7], tokens[6], tokens[8]);
-                Log.d("lookhere", shelter.toString());
-                model.addShelter(shelter);
-                line = br.readLine();
+                    InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
+                    br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                    line = br.readLine();
+                    line = br.readLine();
+                    Log.d("Main", "this is line" + line);
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String key = (String) ds.getKey();
+                        final String[] tokens = line.split(("#"));
+
+
+                        DatabaseReference keyReference = FirebaseDatabase.getInstance().getReference().child("shelters").child(key);
+                        keyReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int id = Integer.parseInt(tokens[0]);
+                                double longitude = Double.parseDouble(tokens[4]);
+                                double latitude = Double.parseDouble(tokens[5]);
+                                String cap = "" + dataSnapshot.child("Capacity").getValue();
+                                Shelter shelter = new Shelter(id, tokens[1], cap, tokens[3], longitude, latitude, tokens[7], tokens[6], tokens[8]);
+                                Log.d("lookhere", shelter.toString());
+                                shelters.add(shelter);
+                                Log.d("letssee", shelters.toString());
+                                shelterNames.add(shelter.getName());
+                                Log.d("working", shelterNames.toString());
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        line = br.readLine();
+                    }
+                    br.close();
+                } catch (IOException e) {
+                    Log.e("Main", "error reading assets", e);
+                }
             }
-            br.close();
-            Log.d("lookhere", model.getShelters().toString());
-        } catch (IOException e) {
-            Log.e("Main", "error reading assets", e);
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
+              }
+        });
+        model.setShelters(shelters);
+        Log.d("lookhere2", model.getShelters().toString());
+    }
+
+    /**
+    public void setNames() {
+        for (int i = 0; i < shelters.size(); i++) {
+            shelterNames.add(shelters.get(i).getName());
+            Log.d("working", shelterNames.toString());
         }
     }
+     */
 }
