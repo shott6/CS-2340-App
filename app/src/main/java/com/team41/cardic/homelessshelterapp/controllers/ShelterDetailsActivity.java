@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 
 public class ShelterDetailsActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class ShelterDetailsActivity extends AppCompatActivity {
     EditText latitude;
     EditText specialNotes;
     EditText phoneNumber;
+    EditText numberCheckIn;
 
     Model model = Model.getInstance();
 
@@ -31,6 +33,36 @@ public class ShelterDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button checkIn = findViewById(R.id.checkIn);
+        checkIn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (model.getCurrentUser() instanceof HomelessPerson) {
+                    HomelessPerson person = (HomelessPerson) model.getCurrentUser();
+                    if (person.getCheckedIn() != true) {
+                        try {
+                            if (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString()) > 0) {
+                                person.setCheckedIn(true);
+                                model.getCurrentShelter().setCapacity("" + (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString())));
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                numberCheckIn.setError("This shelter cannot check in this amount of people.");
+                            }
+                        } catch (java.lang.NumberFormatException e){
+                            numberCheckIn.setError("You tell us the number of people you are trying to check in.");
+                        }
+
+                    } else {
+                        numberCheckIn.setError("You are already checked into a shelter.");
+                    }
+                } else {
+                    numberCheckIn.setError("You're account is not qualified to check into a shelter.");
+                }
+
+
             }
         });
 
@@ -54,5 +86,8 @@ public class ShelterDetailsActivity extends AppCompatActivity {
 
         phoneNumber = (EditText) findViewById(R.id.phoneNumberInput);
         phoneNumber.setText(model.getCurrentShelter().getPhoneNumber());
+
+        numberCheckIn = (EditText) findViewById(R.id.numberCheckIn);
     }
+
 }
