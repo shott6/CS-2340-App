@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner shelterSpinner;
     private EditText searchBar;
+    private TextView errorView;
     Model model = Model.getInstance();
     List<Shelter> shelters = model.getShelters();
     List<String> shelterNames = new ArrayList<>();
@@ -36,12 +39,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         searchBar = (EditText) findViewById(R.id.search_Bar);
+        errorView = (TextView) findViewById(R.id.errorView);
 
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        final Button checkOutButton = findViewById(R.id.checkOut);
+        checkOutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (model.getCurrentUser() instanceof HomelessPerson) {
+                    if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
+                        int newCapacity = Integer.parseInt(model.getCurrentShelter().getCapacity());
+                        newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
+                        model.getCurrentShelter().setCapacity("" + newCapacity);
+                        ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(0);
+                        ((HomelessPerson) model.getCurrentUser()).setCheckedIn(false);
+                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(null);
+                    } else {
+                        errorView.setVisibility(View.VISIBLE);
+                        errorView.setError("You are not checked into a shelter.");
+                    }
+                } else {
+                    errorView.setVisibility(View.VISIBLE);
+                    errorView.setError("You are not checked into a shelter.");
+                }
             }
         });
 
