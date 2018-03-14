@@ -130,5 +130,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e("Main", "error reading assets", e);
         }
+
     }
 }
