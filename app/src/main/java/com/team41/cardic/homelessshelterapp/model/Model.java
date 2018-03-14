@@ -51,6 +51,7 @@ public class Model {
     public User getCurrentUser() {return  currentUser;}
 
     public void addShelter(Shelter shelter) {shelters.add(shelter);}
+    public void setShelters(List<Shelter> set) {shelters = set;}
 
     public List<Shelter> getShelters() {return shelters;}
 
