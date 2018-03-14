@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
+import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.User;
 
@@ -70,27 +71,39 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 FirebaseDatabase.getInstance().getReference().child("users").child(mUserView.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    Admin ref;
-                    String uRef;
-                    String pRef;
+                    HomelessPerson refHomeless;
+                    Admin refAdmin;
+                    String uRefHomeless;
+                    String pRefHomeless;
+                    String uRefAdmin;
+                    String pRefAdmin;
                     boolean isAdmin;
                     boolean matched = false;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        ref = dataSnapshot.getValue(Admin.class);
-                        if (ref == null) {
+                        refHomeless = dataSnapshot.getValue(HomelessPerson.class);
+                        refAdmin = dataSnapshot.getValue(Admin.class);
+                        if (refHomeless == null || refAdmin == null) {
                             mUserView.setError("Invalid username");
                             mPasswordView.setError("Invalid password");
                         } else {
-                            uRef = ref.getUsername();
-                            pRef = ref.getPassword();
-                            isAdmin = ref.getAdmin();
-                            if (mUserView.getText().toString().equals(uRef) && mPasswordView.getText().toString().equals(pRef)) {
+                            isAdmin = refAdmin.getAdmin();
+                            uRefAdmin = refAdmin.getUsername();
+                            pRefAdmin = refAdmin.getPassword();
+                            uRefHomeless = refHomeless.getUsername();
+                            pRefHomeless = refHomeless.getPassword();
+                            if (mUserView.getText().toString().equals(uRefAdmin) && mPasswordView.getText().toString().equals(pRefAdmin)) {
+                                matched = true;
+                            } else if (mUserView.getText().toString().equals(uRefHomeless) && mPasswordView.getText().toString().equals(pRefHomeless)) {
                                 matched = true;
                             }
                             if (matched) {
                                 Model model = Model.getInstance();
-                                model.setCurrentUser(ref);
+                                if (refAdmin.getAdmin()) {
+                                    model.setCurrentUser(refAdmin);
+                                } else {
+                                    model.setCurrentUser(refHomeless);
+                                }
                                 Log.d("CHECKING", "currentUser: " + model.getCurrentUser().toString());
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
