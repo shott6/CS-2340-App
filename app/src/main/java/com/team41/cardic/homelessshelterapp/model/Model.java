@@ -29,6 +29,8 @@ public class Model {
 
     private User currentUser;
 
+    private boolean readData = false;
+
     private Model() {
 
         users = new ArrayList<>();
@@ -52,6 +54,9 @@ public class Model {
 
     public void addShelter(Shelter shelter) {shelters.add(shelter);}
     public void setShelters(List<Shelter> set) {shelters = set;}
+
+    public void setReadData(boolean read) {readData = read;}
+    public boolean getReadData() {return readData;}
 
     public List<Shelter> getShelters() {return shelters;}
 

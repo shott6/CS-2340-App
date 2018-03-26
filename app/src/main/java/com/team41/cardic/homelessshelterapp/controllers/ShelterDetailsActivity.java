@@ -3,10 +3,13 @@ package com.team41.cardic.homelessshelterapp.controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 
@@ -47,7 +50,11 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                                 person.setCheckedIn(true);
                                 person.setNumberCheckedIn(Integer.parseInt(numberCheckIn.getText().toString()));
                                 person.setCurrentShelter(model.getCurrentShelter());
-                                model.getCurrentShelter().setCapacity("" + (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString())));
+
+                                DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
+                                String newCapacity = "" + (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString()));
+                                sheltListRef.child("" + model.getCurrentShelter().getUniqueKey())/*.child("Capacity")*/.setValue(Integer.parseInt(newCapacity));
+                                model.getCurrentShelter().setCapacity(newCapacity);
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
                             } else {
