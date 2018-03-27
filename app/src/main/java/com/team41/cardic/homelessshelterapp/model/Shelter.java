@@ -27,6 +27,8 @@ public class Shelter {
         phoneNumber = _phoneNumber;
     }
 
+    public Shelter() {this(100000, "Generic", "10000", "all", 10.0, 10.0, "Notes", "Address", "number");}
+
     /**
      * Getters and setters
      */

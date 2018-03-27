@@ -50,6 +50,11 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                                 person.setCheckedIn(true);
                                 person.setNumberCheckedIn(Integer.parseInt(numberCheckIn.getText().toString()));
                                 person.setCurrentShelter(model.getCurrentShelter());
+                                DatabaseReference curUser = FirebaseDatabase.getInstance().getReference().child("users").child(person.getUsername());
+                                curUser.child("checkedIn").setValue(true);
+                                curUser.child("numberCheckedIn").setValue(Integer.parseInt(numberCheckIn.getText().toString()));
+                                curUser.child("currentShelter").setValue(model.getCurrentShelter());
+
 
                                 DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
                                 String newCapacity = "" + (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString()));
@@ -68,7 +73,7 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                         numberCheckIn.setError("You are already checked into a shelter.");
                     }
                 } else {
-                    numberCheckIn.setError("You're account is not qualified to check into a shelter.");
+                    numberCheckIn.setError("Your account is not qualified to check into a shelter.");
                 }
 
 
