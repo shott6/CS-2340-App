@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  * Created by shott on 2/6/18.
  */
-// if you're reading this, Nyima was able to push to Git
+// if you're reading this, Nyima was able to push to Git  s
 public class Model {
     //Singleton instance
     private static final Model _instance = new Model();
