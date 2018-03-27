@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                     if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
                         int newCapacity = Integer.parseInt(((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getCapacity());
                         newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(model.getCurrentUser().getUsername());
+                        userRef.child("checkedIn").setValue(false);
+                        userRef.child("numberCheckedIn").setValue("" + 0);
+                        userRef.child("currentShelter").setValue(null);
 
                         DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
                         sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getUniqueKey()).setValue(newCapacity);
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     errorView.setVisibility(View.VISIBLE);
                     errorView.setError("You are not checked into a shelter.");
                 }
+
             }
         });
 

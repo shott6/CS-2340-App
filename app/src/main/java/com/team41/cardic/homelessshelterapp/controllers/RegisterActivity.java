@@ -111,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             HomelessPerson toAdd = new HomelessPerson(fName, lName, uName, pWord);
             mDatabase.child("users").child(uName).setValue(toAdd);
+            mDatabase.child("users").child(uName).child("currentShelter").setValue(null);
         }
     }
 }

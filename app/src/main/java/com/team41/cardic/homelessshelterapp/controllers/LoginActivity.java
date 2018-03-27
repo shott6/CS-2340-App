@@ -33,12 +33,14 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
+import com.team41.cardic.homelessshelterapp.model.Shelter;
 import com.team41.cardic.homelessshelterapp.model.User;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText mUserView;
     private EditText mPasswordView;
+    Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,19 +101,33 @@ public class LoginActivity extends AppCompatActivity {
                                 matched = true;
                             }
                             if (matched) {
-                                Model model = Model.getInstance();
                                 if (refAdmin.getAdmin()) {
                                     model.setCurrentUser(refAdmin);
                                 } else {
                                     model.setCurrentUser(refHomeless);
                                 }
-                                Log.d("CHECKING", "currentUser: " + model.getCurrentUser().toString());
-                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(intent);
                             } else {
                                 mUserView.setError("Invalid username");
                                 mPasswordView.setError("Invalid password");
                             }
+                            if (model.getCurrentUser() instanceof HomelessPerson) {
+                                DatabaseReference userListRef = FirebaseDatabase.getInstance().getReference().child("users").child(uRefHomeless);
+                                userListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Shelter curShelt = (Shelter)dataSnapshot.child("currentShelter").getValue(Shelter.class);
+                                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(curShelt);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                            Log.d("CHECKING", "currentUser: " + model.getCurrentUser().toString());
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intent);
                         }
                     }
 
