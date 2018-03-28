@@ -5,7 +5,7 @@ package com.team41.cardic.homelessshelterapp.model;
  */
 
 public class HomelessPerson extends User {
-    private Shelter currentShelter = null;
+    private int currentShelter = -1;
     private int numberCheckedIn = 0;
     private boolean checkedIn = false;
 
@@ -16,8 +16,8 @@ public class HomelessPerson extends User {
         this("Generic", "User", "username", "password");
     }
 
-    public Shelter getCurrentShelter() {return currentShelter;}
-    public void setCurrentShelter(Shelter shelter) {currentShelter = shelter;}
+    public int getCurrentShelter() {return currentShelter;}
+    public void setCurrentShelter(int shelter) {currentShelter = shelter;}
 
     public int getNumberCheckedIn() {return numberCheckedIn;}
     public void setNumberCheckedIn(int _numCheckedIn) {numberCheckedIn = _numCheckedIn;}

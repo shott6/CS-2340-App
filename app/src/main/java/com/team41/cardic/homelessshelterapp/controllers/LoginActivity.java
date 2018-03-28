@@ -115,8 +115,12 @@ public class LoginActivity extends AppCompatActivity {
                                 userListRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        Shelter curShelt = (Shelter)dataSnapshot.child("currentShelter").getValue(Shelter.class);
-                                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(curShelt);
+                                        if (dataSnapshot.child("currentShelter").getValue() == null) {
+                                            ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(-1);
+                                        } else {
+                                            int curShelt = (dataSnapshot.child("currentShelter").getValue(Integer.class));
+                                            ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(curShelt);
+                                        }
                                         int numChecked = (dataSnapshot.child("numberCheckedIn").getValue(Integer.class));
                                         ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(numChecked);
                                         boolean isChecked = (boolean)dataSnapshot.child("checkedIn").getValue();

@@ -69,20 +69,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (model.getCurrentUser() instanceof HomelessPerson) {
                     if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
-                        int newCapacity = Integer.parseInt(((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getCapacity());
-                        Log.d("checking", "numCheckedIn: " + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn());
+                        int newCapacity = Integer.parseInt(model.getShelters().get(((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).getCapacity());
                         newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
                         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(model.getCurrentUser().getUsername());
                         userRef.child("checkedIn").setValue(false);
                         userRef.child("numberCheckedIn").setValue(0);
-                        userRef.child("currentShelter").setValue(null);
+                        userRef.child("currentShelter").setValue(-1);
 
                         DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
-                        sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getUniqueKey()).setValue(newCapacity);
-                        ((HomelessPerson) model.getCurrentUser()).getCurrentShelter().setCapacity("" + newCapacity);
+                        sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).setValue(newCapacity);
+                        model.getShelters().get(((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).setCapacity("" + newCapacity);
                         ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(0);
                         ((HomelessPerson) model.getCurrentUser()).setCheckedIn(false);
-                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(null);
+                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(-1);
                     } else {
                         errorView.setVisibility(View.VISIBLE);
                         errorView.setError("You are not checked into a shelter.");

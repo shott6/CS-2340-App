@@ -49,11 +49,11 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                             if (Integer.parseInt(model.getCurrentShelter().getCapacity()) - Integer.parseInt(numberCheckIn.getText().toString()) > 0) {
                                 person.setCheckedIn(true);
                                 person.setNumberCheckedIn(Integer.parseInt(numberCheckIn.getText().toString()));
-                                person.setCurrentShelter(model.getCurrentShelter());
+                                person.setCurrentShelter(model.getCurrentShelter().getUniqueKey());
                                 DatabaseReference curUser = FirebaseDatabase.getInstance().getReference().child("users").child(person.getUsername());
                                 curUser.child("checkedIn").setValue(true);
                                 curUser.child("numberCheckedIn").setValue(Integer.parseInt(numberCheckIn.getText().toString()));
-                                curUser.child("currentShelter").setValue(model.getCurrentShelter());
+                                curUser.child("currentShelter").setValue(model.getCurrentShelter().getUniqueKey());
 
 
                                 DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
