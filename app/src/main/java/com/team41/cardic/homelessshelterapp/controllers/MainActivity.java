@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
                         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(model.getCurrentUser().getUsername());
                         userRef.child("checkedIn").setValue(false);
-                        userRef.child("numberCheckedIn").setValue("" + 0);
+                        userRef.child("numberCheckedIn").setValue(0);
                         userRef.child("currentShelter").setValue(null);
 
                         DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
