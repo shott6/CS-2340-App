@@ -7,23 +7,33 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.team41.cardic.homelessshelterapp.model.Filter;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String searchString;
     private Filter searchFilter = new Filter();
     private List<Shelter> searchResults = new ArrayList<>();
     private Spinner resSpinner;
     private List<String> shelterNames = new ArrayList<>();
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+
+        MapView map = (MapView) findViewById(R.id.MapView);
+        map.getMapAsync(this);
 
         searchString = getIntent().getStringExtra("SEARCH_STRING");
         List<Shelter> temp = new ArrayList<>();
@@ -106,5 +116,23 @@ public class SearchResultsActivity extends AppCompatActivity {
         ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, shelterNames);
         shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         resSpinner.setAdapter(shelterAdapter);
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+            }
+        });
+
+        for (Shelter shelt: searchResults) {
+            LatLng loc = new LatLng(shelt.getLatitude(), shelt.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(loc).title(shelt.getName()).snippet(shelt.getPhoneNumber()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+        }
     }
 }
