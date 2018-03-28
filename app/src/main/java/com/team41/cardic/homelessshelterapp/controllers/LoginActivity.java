@@ -137,29 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-                /**
-                for (User user:model.getUserList()){
-                    if ((mUserView.getText().toString().equals(user.getUsername()) && (mPasswordView.getText().toString().equals(user.getPassword())))) {
-                        matched = true;
-                    }
-                }
-
-                if (matched) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    mUserView.setError("Invalid username");
-                    mPasswordView.setError("Invalid password");
-                }
-                /*if (mUserView.getText().toString().equals(dummyUsername) && mPasswordView.getText().toString().equals(dummyPassword)) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    mUserView.setError("Invalid username");
-                    mPasswordView.setError("Invalid password");
-                }*/
             }
         });
 

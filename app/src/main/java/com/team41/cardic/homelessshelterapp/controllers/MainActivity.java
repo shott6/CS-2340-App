@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 if (model.getCurrentUser() instanceof HomelessPerson) {
                     if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
                         int newCapacity = Integer.parseInt(((HomelessPerson) model.getCurrentUser()).getCurrentShelter().getCapacity());
+                        Log.d("checking", "numCheckedIn: " + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn());
                         newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
                         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(model.getCurrentUser().getUsername());
                         userRef.child("checkedIn").setValue(false);
