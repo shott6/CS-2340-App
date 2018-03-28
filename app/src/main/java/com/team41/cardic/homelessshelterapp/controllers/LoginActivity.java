@@ -117,6 +117,10 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Shelter curShelt = (Shelter)dataSnapshot.child("currentShelter").getValue(Shelter.class);
                                         ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(curShelt);
+                                        int numChecked = (Integer)dataSnapshot.child("numberCheckedIn").getValue();
+                                        ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(numChecked);
+                                        boolean isChecked = (boolean)dataSnapshot.child("checkedIn").getValue();
+                                        ((HomelessPerson) model.getCurrentUser()).setCheckedIn(isChecked);
                                     }
 
                                     @Override
