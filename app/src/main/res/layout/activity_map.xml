@@ -12,14 +12,24 @@
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginStart="11dp" />
+        android:layout_marginStart="11dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:id="@+id/radioButtonGroup"
-        android:layout_width="319dp"
-        android:layout_height="384dp"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="44dp">
+        android:layout_width="0dp"
+        android:layout_height="404dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/femaleOnlyRadioButton"
@@ -118,19 +128,5 @@
             app:layout_constraintVertical_bias="0.086" />
 
     </RadioGroup>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>
