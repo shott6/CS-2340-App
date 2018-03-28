@@ -56,15 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Button mapButton = findViewById(R.id.mapScreenButton);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

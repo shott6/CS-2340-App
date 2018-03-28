@@ -1,6 +1,7 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
 import android.os.health.ServiceHealthStats;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +10,10 @@ import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.team41.cardic.homelessshelterapp.model.Filter;
@@ -19,7 +22,7 @@ import com.team41.cardic.homelessshelterapp.model.Shelter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SearchResultsActivity extends FragmentActivity implements OnMapReadyCallback {
     private String searchString;
     private Filter searchFilter = new Filter();
     private List<Shelter> searchResults = new ArrayList<>();
@@ -31,9 +34,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-
-        MapView map = (MapView) findViewById(R.id.MapView);
-        map.getMapAsync(this);
 
         searchString = getIntent().getStringExtra("SEARCH_STRING");
         List<Shelter> temp = new ArrayList<>();
@@ -116,6 +116,9 @@ public class SearchResultsActivity extends AppCompatActivity implements OnMapRea
         ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, shelterNames);
         shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         resSpinner.setAdapter(shelterAdapter);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        mapFragment.getMapAsync(this);
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {

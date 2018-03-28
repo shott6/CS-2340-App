@@ -32,7 +32,6 @@
             android:label="Main" />
         <activity android:name=".ShelterDetailsActivity" />
         <activity android:name=".SearchResultsActivity" />
-        <activity android:name=".MapActivity"></activity>
     </application>
 
 </manifest>
