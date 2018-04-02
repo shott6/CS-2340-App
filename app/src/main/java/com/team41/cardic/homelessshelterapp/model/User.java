@@ -105,7 +105,7 @@ public abstract class User {
     public void setAdmin(boolean admin) {isAdmin = admin;}
 
     /**
-     * getter method for whether or not the User's account is locked or not
+     * getter method for whether or not the User's account is locked
      * @return boolean for whether ot not the User's account is locked or not
      */
     public boolean getAccountState() {return accountLocked;}
