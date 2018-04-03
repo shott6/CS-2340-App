@@ -22,6 +22,8 @@ public class FilterGetByNameTest {
     private Filter filter = new Filter();
 
     private String name = "Shelter1";
+    double longitude = 3.14;
+    double latitude = 1.59;
 
     private String[] correctShelts = new String[2];
     int correctSheltsSize;
@@ -32,9 +34,9 @@ public class FilterGetByNameTest {
     @Before
     public void setup() {
         model.setShelters(new ArrayList<Shelter>());
-        model.addShelter(new Shelter(0, name, "", "", 3.14, 1.59, "", "", ""));
-        model.addShelter(new Shelter(1, "notThis", "", "", 2.42, 1.34, "", "", ""));
-        model.addShelter(new Shelter(2, "no", "", "", 4.6434, 3.452, "", "", ""));
+        model.addShelter(new Shelter(0, name, "", "",longitude, latitude, "", "", ""));
+        model.addShelter(new Shelter(1, "notThis", "", "", longitude, latitude, "", "", ""));
+        model.addShelter(new Shelter(2, "no", "", "", longitude, latitude, "", "", ""));
     }
 
     @Test
@@ -50,7 +52,7 @@ public class FilterGetByNameTest {
 
     @Test
     public void testNameEquality2() {
-        model.addShelter(new Shelter(3, name, "", "", 2.342, 43.3, "", "", ""));
+        model.addShelter(new Shelter(3, name, "", "", longitude, latitude, "", "", ""));
         correctShelts[0] = name;
         correctShelts[1] = name;
         correctSheltsSize = 2;
