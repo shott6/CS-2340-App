@@ -1,5 +1,7 @@
 package com.team41.cardic.homelessshelterapp;
 
+import android.util.Log;
+
 import com.team41.cardic.homelessshelterapp.model.Filter;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
@@ -33,7 +35,8 @@ public class FilterGetByNameTest {
      */
     @Before
     public void setup() {
-        model.setShelters(new ArrayList<Shelter>());
+        filter.clearShelterList();
+        model.clearShelters();
         model.addShelter(new Shelter(0, name, "", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(1, "notThis", "", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(2, "no", "", "", LONG, LAT, "", "", ""));
@@ -76,7 +79,7 @@ public class FilterGetByNameTest {
      */
     @Test
     public void testEmpty() {
-        model.setShelters(new ArrayList<Shelter>());
+        model.clearShelters();
         filter.getByName("name");
         Assert.assertEquals(new ArrayList<Shelter>(), filter.getFilteredShelters());
     }

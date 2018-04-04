@@ -60,9 +60,10 @@ public class Filter {
     public void getNewborns() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Newborns") ||
-                    currentShelter.getGender().contains("anyAge") ||
-                    currentShelter.getGender().contains("Anyone")){
+            String currentShelterGender = currentShelter.getGender();
+            if(currentShelterGender.contains("Newborns") ||
+                    currentShelterGender.contains("anyAge") ||
+                    currentShelterGender.contains("Anyone")){
                 filteredShelters.add(currentShelter);
             }
         }
@@ -75,9 +76,10 @@ public class Filter {
     public void getFamilies() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Children") ||
-                    currentShelter.getGender().contains("anyAge") ||
-                    currentShelter.getGender().contains("Anyone")) {
+            String currentShelterFamilies = currentShelter.getGender();
+            if(currentShelterFamilies.contains("Children") ||
+                    currentShelterFamilies.contains("anyAge") ||
+                    currentShelterFamilies.contains("Anyone")) {
                 filteredShelters.add(currentShelter);
             }
         }
@@ -90,9 +92,10 @@ public class Filter {
     public void getYoungAdults() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Young adults") ||
-                    currentShelter.getGender().contains("anyAge") ||
-                    currentShelter.getGender().contains("Anyone")) {
+            String currentShelterYA = currentShelter.getGender();
+            if(currentShelterYA.contains("Young adults") ||
+                    currentShelterYA.contains("anyAge") ||
+                    currentShelterYA.contains("Anyone")) {
                 filteredShelters.add(currentShelter);
             }
         }
