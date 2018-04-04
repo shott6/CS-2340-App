@@ -1,6 +1,7 @@
 package com.team41.cardic.homelessshelterapp.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -81,8 +82,15 @@ public final class Model {
      * setter method for the list of Shelters that the Model holds
      * @param set list of Shelters that will become the new list of Shelters for the Model
      */
-    public void setShelters(List<Shelter> set) {
+    public void setShelters(Collection<Shelter> set) {
         shelters.addAll(set);
+    }
+
+    /**
+     * Method that will clear that shelters Array List
+     */
+    public void clearShelters() {
+        shelters.clear();
     }
 
     /**

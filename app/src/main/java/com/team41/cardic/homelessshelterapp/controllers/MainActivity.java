@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchBar;
     private TextView errorView;
     private final Model model = Model.getInstance();
-    private final List<Shelter> shelters = new ArrayList<>();
+    private final Collection<Shelter> shelters = new ArrayList<>();
     private final List<String> shelterNames = new ArrayList<>();
     private String cur;
 
@@ -136,18 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 int index = shelterNames.indexOf(cur);
                 model.setCurrentShelter(model.getShelters().get(index));
 
-                /*FirebaseDatabase.getInstance().getReference().child("shelters").child("" + index).
-                addListenerForSingleValueEvent(new ValueEventListener() {
-                    String shelterCapacityRef;
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        shelterCapacityRef = dataSnapshot.getValue().toString();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
                 Intent intent = new Intent(getBaseContext(), ShelterDetailsActivity.class);
                 startActivity(intent);
             }
