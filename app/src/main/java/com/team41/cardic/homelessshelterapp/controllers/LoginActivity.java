@@ -1,35 +1,12 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,40 +17,32 @@ import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
-import com.team41.cardic.homelessshelterapp.model.Shelter;
-import com.team41.cardic.homelessshelterapp.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via username/password.
  */
 public class LoginActivity extends AppCompatActivity {
 
-
-    private static final String dummyUsername = "user";
-    private static final String dummyPassword = "pass";
-
     private EditText mUserView;
     private EditText mPasswordView;
-    Model model = Model.getInstance();
+    private final Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mUserView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mUserView = findViewById(R.id.username);
+        mPasswordView = findViewById(R.id.password);
 
 
         Button SignInButton = findViewById(R.id.sign_in_button);
         SignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                FirebaseDatabase.getInstance().getReference().child("users").child(mUserView.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("users").
+                        child(mUserView.getText().toString()).
+                        addListenerForSingleValueEvent(new ValueEventListener() {
                     HomelessPerson refHomeless;
                     Admin refAdmin;
                     String uRefHomeless;
@@ -86,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         refHomeless = dataSnapshot.getValue(HomelessPerson.class);
                         refAdmin = dataSnapshot.getValue(Admin.class);
-                        if (refHomeless == null || refAdmin == null) {
+                        if ((refHomeless == null) || (refAdmin == null)) {
                             mUserView.setError("Invalid username");
                             mPasswordView.setError("Invalid password");
                         } else {
@@ -95,9 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                             pRefAdmin = refAdmin.getPassword();
                             uRefHomeless = refHomeless.getUsername();
                             pRefHomeless = refHomeless.getPassword();
-                            if (mUserView.getText().toString().equals(uRefAdmin) && mPasswordView.getText().toString().equals(pRefAdmin)) {
+                            if (mUserView.getText().toString().equals(uRefAdmin) &&
+                                    mPasswordView.getText().toString().equals(pRefAdmin)) {
                                 matched = true;
-                            } else if (mUserView.getText().toString().equals(uRefHomeless) && mPasswordView.getText().toString().equals(pRefHomeless)) {
+                            } else if (mUserView.getText().toString().equals(uRefHomeless) &&
+                                        mPasswordView.getText().toString().equals(pRefHomeless)) {
                                 matched = true;
                             }
                             if (matched) {
@@ -111,20 +82,28 @@ public class LoginActivity extends AppCompatActivity {
                                 mPasswordView.setError("Invalid password");
                             }
                             if (model.getCurrentUser() instanceof HomelessPerson) {
-                                DatabaseReference userListRef = FirebaseDatabase.getInstance().getReference().child("users").child(uRefHomeless);
-                                userListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                DatabaseReference userListRef = FirebaseDatabase.getInstance().
+                                                getReference().child("users").child(uRefHomeless);
+                                userListRef.addListenerForSingleValueEvent(new ValueEventListener(){
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.child("currentShelter").getValue() == null) {
-                                            ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(-1);
+                                        if(dataSnapshot.child("currentShelter").getValue() == null){
+                                            ((HomelessPerson) model.getCurrentUser()).
+                                                    setCurrentShelter(-1);
                                         } else {
-                                            int curShelt = (dataSnapshot.child("currentShelter").getValue(Integer.class));
-                                            ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(curShelt);
+                                            int curShelt = (dataSnapshot.child("currentShelter").
+                                                            getValue(Integer.class));
+                                            ((HomelessPerson) model.getCurrentUser()).
+                                                    setCurrentShelter(curShelt);
                                         }
-                                        int numChecked = (dataSnapshot.child("numberCheckedIn").getValue(Integer.class));
-                                        ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(numChecked);
-                                        boolean isChecked = (boolean)dataSnapshot.child("checkedIn").getValue();
-                                        ((HomelessPerson) model.getCurrentUser()).setCheckedIn(isChecked);
+                                        int numChecked = (dataSnapshot.child("numberCheckedIn").
+                                                            getValue(Integer.class));
+                                        ((HomelessPerson) model.getCurrentUser()).
+                                                            setNumberCheckedIn(numChecked);
+                                        boolean isChecked = (boolean)dataSnapshot.
+                                                            child("checkedIn").getValue();
+                                        ((HomelessPerson) model.getCurrentUser()).
+                                                            setCheckedIn(isChecked);
                                     }
 
                                     @Override
@@ -133,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            Log.d("CHECKING", "currentUser: " + model.getCurrentUser().toString());
                             Intent intent = new Intent(getBaseContext(), MainActivity.class);
                             startActivity(intent);
                         }
@@ -150,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);

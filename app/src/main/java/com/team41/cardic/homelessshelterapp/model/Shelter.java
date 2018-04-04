@@ -11,7 +11,7 @@ public class Shelter {
     private String gender;
     private double longitude;
     private double latitude;
-    private String specialNotes;
+    private CharSequence specialNotes;
     private String address;
     private String phoneNumber;
 
@@ -20,14 +20,18 @@ public class Shelter {
      * @param _uniqueKey int that uniquely represents each specific Shelter created
      * @param _name  String of name of Shelter
      * @param _capacity String representation of the limit the Shelter can hold
-     * @param _gender String representation of the type of people allowed in the Shelter (either male/female)
+     * @param _gender String representation of the type of people allowed in the Shelter
+     *                (either male/female)
      * @param _longitude double that is the longitude of the location of the Shelter
      * @param _latitude double that is the latitude of the location of the Shelter
-     * @param _specialNotes String of any extra information not included in the parameters above
+     * @param _specialNotes CharSequence of any extra information not included
+     *                      in the parameters above
      * @param _address String of the address of the Shelter
      * @param _phoneNumber String representation of the phone number of the Shelter location
      */
-    public Shelter(int _uniqueKey, String _name, String _capacity, String _gender, double _longitude, double _latitude, String _specialNotes, String _address, String _phoneNumber) {
+    public Shelter(int _uniqueKey, String _name, String _capacity, String _gender,
+                   double _longitude, double _latitude, CharSequence _specialNotes,
+                   String _address, String _phoneNumber) {
         uniqueKey = _uniqueKey;
         name = _name;
         capacity = _capacity;
@@ -81,7 +85,8 @@ public class Shelter {
 
     /**
      * setter method for the capacity variable of the Shelter
-     * @param capacityNew String representation of the new capacity you would like to set the Shelter to
+     * @param capacityNew String representation of the new capacity you would like
+     *                    to set the Shelter to
      */
     public void setCapacity(String capacityNew) {
         capacity = capacityNew;
@@ -137,15 +142,15 @@ public class Shelter {
 
     /**
      * getter method for the special notes of the Shelter
-     * @return String that contains the special notes of the Shelter
+     * @return CharSequence that contains the special notes of the Shelter
      */
-    public String getSpecialNotes() {return specialNotes; }
+    public CharSequence getSpecialNotes() {return specialNotes; }
 
     /**
      * setter method for the special notes of the Shelter
      * @param newSpecialNotes String that contains the new special notes to set for the Shelter
      */
-    public void setSpecialNotes(String newSpecialNotes) {specialNotes = newSpecialNotes; }
+    public void setSpecialNotes(CharSequence newSpecialNotes) {specialNotes = newSpecialNotes; }
 
     /**
      * getter method for the address of the Shelter

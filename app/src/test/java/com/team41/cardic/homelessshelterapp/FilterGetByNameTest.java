@@ -1,7 +1,5 @@
 package com.team41.cardic.homelessshelterapp;
 
-import android.util.Log;
-
 import com.team41.cardic.homelessshelterapp.model.Filter;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
@@ -19,16 +17,16 @@ import java.util.ArrayList;
 
 public class FilterGetByNameTest {
 
-    private Filter filter = new Filter();
+    private final Filter filter = new Filter();
 
-    private String name = "Shelter1";
-    final double LONG = 3.14;
-    final double LAT = 1.59;
+    private final String name = "Shelter1";
+    private final double LONG = 3.14;
+    private final double LAT = 1.59;
 
-    private String[] correctShelts = new String[2];
-    int correctSheltsSize;
+    private final String[] correctShelts = new String[2];
+    private int correctSheltsSize;
 
-    Model model = Model.getInstance();
+    private final Model model = Model.getInstance();
 
 
     @Before

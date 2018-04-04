@@ -28,26 +28,24 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner shelterSpinner;
+    private Spinner shelterSpinner;
     private EditText searchBar;
     private TextView errorView;
-    Model model = Model.getInstance();
-    List<Shelter> shelters = new ArrayList<>();
-    List<String> shelterNames = new ArrayList<>();
-    String line;
-    String cur;
+    private final Model model = Model.getInstance();
+    private final List<Shelter> shelters = new ArrayList<>();
+    private final List<String> shelterNames = new ArrayList<>();
+    private String cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchBar = (EditText) findViewById(R.id.search_Bar);
-        errorView = (TextView) findViewById(R.id.errorView);
+        searchBar = findViewById(R.id.search_Bar);
+        errorView = findViewById(R.id.errorView);
         if (!model.getReadData()) {
             this.readShelterFile();
         } else {
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
@@ -66,19 +65,27 @@ public class MainActivity extends AppCompatActivity {
 
         final Button checkOutButton = findViewById(R.id.checkOut);
         checkOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 if (model.getCurrentUser() instanceof HomelessPerson) {
                     if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
-                        int newCapacity = Integer.parseInt(model.getShelters().get(((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).getCapacity());
-                        newCapacity = newCapacity + ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(model.getCurrentUser().getUsername());
+                        int newCapacity = Integer.parseInt(model.getShelters().
+                                get(((HomelessPerson) model.getCurrentUser()).
+                                        getCurrentShelter()).getCapacity());
+                        newCapacity = newCapacity +
+                                ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().
+                                child("users").child(model.getCurrentUser().getUsername());
                         userRef.child("checkedIn").setValue(false);
                         userRef.child("numberCheckedIn").setValue(0);
                         userRef.child("currentShelter").setValue(-1);
 
-                        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
-                        sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).setValue(newCapacity);
-                        model.getShelters().get(((HomelessPerson) model.getCurrentUser()).getCurrentShelter()).setCapacity("" + newCapacity);
+                        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().
+                                getReference().child("shelters");
+                        sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).
+                                getCurrentShelter()).setValue(newCapacity);
+                        model.getShelters().get(((HomelessPerson) model.getCurrentUser()).
+                                getCurrentShelter()).setCapacity("" + newCapacity);
                         ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(0);
                         ((HomelessPerson) model.getCurrentUser()).setCheckedIn(false);
                         ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(-1);
@@ -96,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 String searchString = searchBar.getText().toString();
                 Log.d("checkText", "search: " + searchString);
@@ -106,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        shelterSpinner = (Spinner) findViewById(R.id.shelterSpinner);
+        shelterSpinner = findViewById(R.id.shelterSpinner);
 
-        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shelterNames);
+        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_spinner_item, shelterNames);
         shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shelterSpinner.setAdapter(shelterAdapter);
 
@@ -122,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 int index = shelterNames.indexOf(cur);
                 model.setCurrentShelter(model.getShelters().get(index));
 
-                /*FirebaseDatabase.getInstance().getReference().child("shelters").child("" + index).addListenerForSingleValueEvent(new ValueEventListener() {
+                /*FirebaseDatabase.getInstance().getReference().child("shelters").child("" + index).
+                addListenerForSingleValueEvent(new ValueEventListener() {
                     String shelterCapacityRef;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -140,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void readShelterFile() {
+    private void readShelterFile() {
 
         try {
             InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            line = br.readLine();
+            BufferedReader br=new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String line = br.readLine();
             line = br.readLine();
             Log.d("Main", "this is line" + line);
 
@@ -156,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 double longitude = Double.parseDouble(tokens[4]);
                 double latitude = Double.parseDouble(tokens[5]);
                 //String cap = "" + dataSnapshot.child("Capacity").getValue();
-                Shelter shelter = new Shelter(id, tokens[1], tokens[2], tokens[3], longitude, latitude, tokens[7], tokens[6], tokens[8]);
+                Shelter shelter = new Shelter(id, tokens[1], tokens[2], tokens[3],
+                                            longitude, latitude, tokens[7], tokens[6], tokens[8]);
                 Log.d("lookhere", shelter.toString());
                 shelters.add(shelter);
                 Log.d("letssee", shelters.toString());
@@ -171,12 +182,13 @@ public class MainActivity extends AppCompatActivity {
         model.setShelters(shelters);
         Log.d("lookhere2", "modelShelters: " + model.getShelters().toString());
 
-        model.setReadData(true);
+        model.flipReadData();
 
 
 
 
-        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().child("shelters");
+        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().
+                child("shelters");
         sheltListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -186,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
                     if (Integer.parseInt(ds.getKey()) < model.getShelters().size()) {
                         int capacity = Integer.parseInt(refCapacity/*.replaceAll("[^0-9]", "")*/);
                         Log.d("testinghere", "key: " + ds.getKey());
-                        model.getShelters().get(Integer.parseInt(ds.getKey())).setCapacity("" + capacity);
+                        model.getShelters().get(Integer.parseInt(ds.getKey())).
+                                setCapacity("" + capacity);
                     }
                 }
             }
@@ -200,7 +213,8 @@ public class MainActivity extends AppCompatActivity {
                     /*for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         String key = (String) ds.getKey();
 
-                        DatabaseReference keyReference = FirebaseDatabase.getInstance().getReference().child("shelters").child(key);
+                        DatabaseReference keyReference = FirebaseDatabase.getInstance().
+                        getReference().child("shelters").child(key);
                         keyReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -208,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
                                 double longitude = Double.parseDouble(tokens[4]);
                                 double latitude = Double.parseDouble(tokens[5]);
                                 String cap = "" + dataSnapshot.child("Capacity").getValue();
-                                Shelter shelter = new Shelter(id, tokens[1], cap, tokens[3], longitude, latitude, tokens[7], tokens[6], tokens[8]);
+                                Shelter shelter = new Shelter(id, tokens[1], cap, tokens[3],
+                                longitude, latitude, tokens[7], tokens[6], tokens[8]);
                                 Log.d("lookhere", shelter.toString());
                                 shelters.add(shelter);
                                 Log.d("letssee", shelters.toString());
