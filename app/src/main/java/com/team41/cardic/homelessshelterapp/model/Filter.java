@@ -11,6 +11,11 @@ public class Filter {
     Model model = Model.getInstance();
     List<Shelter> filteredShelters = new ArrayList<>();
 
+    /**
+     * method that searches through all the Shelters of the Model for a specific name
+     * and adds that shelter to the filteredShelters list
+     * @param name String of the name of the Shelter that you want to search for
+     */
     public void getByName(String name) {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -20,6 +25,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that are female gender restricted
+     * and adds those shelters to the filteredShelters list
+     */
     public void getFemaleOnly() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -29,6 +38,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that are male gender restricted
+     * and adds those shelters to the filteredShelters list
+     */
     public void getMaleOnly() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -38,6 +51,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that allow Newborns
+     * and adds those shelters to the filteredShelters list
+     */
     public void getNewborns() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -47,6 +64,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that allow families
+     * and adds those shelters to the filteredShelters list
+     */
     public void getFamilies() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -56,6 +77,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that allow Young Adults
+     * and adds those shelters to the filteredShelters list
+     */
     public void getYoungAdults() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -65,6 +90,10 @@ public class Filter {
         }
     }
 
+    /**
+     * method that searches through all the Shelters of the Model that allow anyone
+     * and adds those shelters to the filteredShelters list
+     */
     public void getAnyone() {
         for(int i = 0; i < model.getShelters().size(); i++) {
             Shelter currentShelter = model.getShelters().get(i);
@@ -74,10 +103,17 @@ public class Filter {
         }
     }
 
+    /**
+     * getter method for the FilteredShelters of the Filter class
+     * @return returns list of Shelters that are filtered
+     */
     public List<Shelter> getFilteredShelters() {
         return filteredShelters;
     }
 
+    /**
+     * method that clears the list of Filtered Shelters of this Filter class
+     */
     public void clearShelterList() {
         filteredShelters.clear();
     }
