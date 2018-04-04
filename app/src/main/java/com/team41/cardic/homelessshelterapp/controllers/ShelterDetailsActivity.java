@@ -13,6 +13,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 
+/**
+ * This class controls checking in a User to a shelter. If a User decides to check in, the
+ * information of that specific shelter will be updated (such as incrementing the capacity).
+ * Additionally, this class allows a User to use the back button.
+ */
 public class ShelterDetailsActivity extends AppCompatActivity {
 
     private EditText numberCheckIn;

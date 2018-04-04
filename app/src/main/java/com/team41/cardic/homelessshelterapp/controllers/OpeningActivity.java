@@ -8,6 +8,10 @@ import android.widget.Button;
 import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.controllers.LoginActivity;
 
+/**
+ * This class controls the activity that occurs upon Opening of the app. Upon opening app, a user
+ * can either login or register.
+ */
 public class OpeningActivity extends AppCompatActivity {
 
     @Override

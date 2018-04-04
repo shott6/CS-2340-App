@@ -43,8 +43,9 @@ public class Shelter {
         phoneNumber = _phoneNumber;
     }
 
-    /**
-     * Getters and setters
+    /*
+    Getters and setters
+    -------------------
      */
 
     /**

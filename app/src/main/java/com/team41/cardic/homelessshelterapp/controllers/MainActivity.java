@@ -29,6 +29,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class controls the activities that can occur on the Main page when the user enters the app
+ * after logging in. This includes activities such as going back, searching for Shelters,
+ * logging out, and checking out.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Spinner shelterSpinner;
@@ -150,6 +155,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method reads the .csv file that contains the list of shelters and parses the list
+     * to create unique Shelters based on the information given within the csv
+     */
     private void readShelterFile() {
 
         try {

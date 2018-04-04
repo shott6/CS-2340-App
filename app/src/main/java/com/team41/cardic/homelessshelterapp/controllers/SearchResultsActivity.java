@@ -18,6 +18,9 @@ import com.team41.cardic.homelessshelterapp.model.Shelter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class controls the searching of Shelters through either the map or the search bar
+ */
 public class SearchResultsActivity extends FragmentActivity implements OnMapReadyCallback {
     private final Filter searchFilter = new Filter();
     private final List<Shelter> searchResults = new ArrayList<>();
