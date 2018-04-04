@@ -38,7 +38,6 @@ public final class Model {
     /**
      * method that allows an isntance of User to be added to the list of Users that Model holds
      * @param user an instance of the User class to be added to the Model
-     * @return boolean that returns true if the User was added and false if otherwise
      */
     public void addUser(User user) {
         users.add(user);
@@ -104,19 +103,5 @@ public final class Model {
      * @return List of Shelters of the Model
      */
     public List<Shelter> getShelters() {return shelters;}
-
-    /**
-     * getter method for the list of Users of the Model
-     * @return String representation of the list of Users of the Model
-     */
-    public String getUsers() {
-        return users.toString();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<User> getUserList(){return users;}
 
 }
