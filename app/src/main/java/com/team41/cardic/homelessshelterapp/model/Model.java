@@ -17,6 +17,10 @@ public class Model {
     //Singleton instance
     private static final Model _instance = new Model();
 
+    /**
+     * gets an instance of the singleton model
+     * @return returns the singleton instance
+     */
     public static Model getInstance() {
         return _instance;
     }
@@ -37,33 +41,86 @@ public class Model {
         shelters = new ArrayList<>();
     }
 
+    /**
+     * method that allows an isntance of User to be added to the list of Users that Model holds
+     * @param user an instance of the User class to be added to the Model
+     * @return boolean that returns true if the User was added and false if otherwise
+     */
     public boolean addUser(User user) {
         users.add(user);
         return true;
     }
 
+    /**
+     * setter method for the currentShelter variable
+     * @param shelter the Shelter you would like to make as currentShelter
+     */
     public void setCurrentShelter(Shelter shelter) {
         currentShelter = shelter;
     }
+
+    /**
+     * getter method for the current Shelter of the Model
+     * @return returns the current Shelter of the Model
+     */
     public Shelter getCurrentShelter() {
         return currentShelter;
     }
 
+    /**
+     * setter method for the current User variable of the Model
+     * @param user the User to set the currentUser of the Model
+     */
     public void setCurrentUser(User user) {currentUser = user;}
+
+    /**
+     * getter method for the currentUser of the Model
+     * @return returns the current User of the Model
+     */
     public User getCurrentUser() {return  currentUser;}
 
+    /**
+     * adds a Shelter to the list of Shelters that the Model holds
+     * @param shelter Shelter that will be added to the list of Shelters of Model
+     */
     public void addShelter(Shelter shelter) {shelters.add(shelter);}
+
+    /**
+     * setter method for the list of Shelters that the Model holds
+     * @param set list of Shelters that will become the new list of Shelters for the Model
+     */
     public void setShelters(List<Shelter> set) {shelters = set;}
 
+    /**
+     * setter method for the readData boolean variable of the Model
+     * @param read boolean to set the variable for readData
+     */
     public void setReadData(boolean read) {readData = read;}
+
+    /**
+     * getter method for the readData variable in Model
+     * @return boolean value saved in the readData variable of the Model
+     */
     public boolean getReadData() {return readData;}
 
+    /**
+     * getter method for the list of Shelters of the Model
+     * @return List of Shelters of the Model
+     */
     public List<Shelter> getShelters() {return shelters;}
 
+    /**
+     * getter method for the list of Users of the Model
+     * @return String representation of the list of Users of the Model
+     */
     public String getUsers() {
         return users.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<User> getUserList(){return users;}
 
 }
