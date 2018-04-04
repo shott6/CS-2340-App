@@ -40,11 +40,6 @@ public class Shelter {
     }
 
     /**
-     * No-arg constructor for the Shelter class that creates a generic Shelter
-     */
-    public Shelter() {this(100000, "Generic", "10000", "all", 10.0, 10.0, "Notes", "Address", "number");}
-
-    /**
      * Getters and setters
      */
 
