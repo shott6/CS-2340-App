@@ -23,7 +23,8 @@ public abstract class User {
      * @param admin whether the user is an admin or not
      * @param _accountLocked if the user gets rejected too many times, account becomes locked
      */
-    public User(String _firstName, String _lastName, String _username, String _password, boolean admin, boolean _accountLocked) {
+    User(String _firstName, String _lastName, String _username,
+         String _password, boolean admin, boolean _accountLocked) {
         firstName = _firstName;
         lastName = _lastName;
         username = _username;
@@ -37,7 +38,7 @@ public abstract class User {
      * No-Arg constructor that creates a user with name being "Generic User",
      * username: User, password: pass, not an admin, and account not locked
      */
-    public User() {
+    User() {
         this("Generic", "User", "user", "pass", false,  false);
     }
     /*

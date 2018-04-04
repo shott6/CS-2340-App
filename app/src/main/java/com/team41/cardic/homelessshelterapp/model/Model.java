@@ -1,19 +1,13 @@
 package com.team41.cardic.homelessshelterapp.model;
 
-import android.util.Log;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by shott on 2/6/18.
  */
 // if you're reading this, Nyima was able to push to Git  s
-public class Model {
+public final class Model {
     //Singleton instance
     private static final Model _instance = new Model();
 
@@ -25,11 +19,11 @@ public class Model {
         return _instance;
     }
 
-    private List<Shelter> shelters;
+    private final List<Shelter> shelters;
 
     private Shelter currentShelter;
 
-    private List<User> users;
+    private final List<User> users;
 
     private User currentUser;
 
@@ -44,11 +38,9 @@ public class Model {
     /**
      * method that allows an isntance of User to be added to the list of Users that Model holds
      * @param user an instance of the User class to be added to the Model
-     * @return boolean that returns true if the User was added and false if otherwise
      */
-    public boolean addUser(User user) {
+    public void addUser(User user) {
         users.add(user);
-        return true;
     }
 
     /**
@@ -89,13 +81,16 @@ public class Model {
      * setter method for the list of Shelters that the Model holds
      * @param set list of Shelters that will become the new list of Shelters for the Model
      */
-    public void setShelters(List<Shelter> set) {shelters = set;}
+    public void setShelters(List<Shelter> set) {
+        shelters.addAll(set);
+    }
 
     /**
-     * setter method for the readData boolean variable of the Model
-     * @param read boolean to set the variable for readData
+     * method for the readData boolean variable of the Model that
+     * flips its current value to opposite value
+     *
      */
-    public void setReadData(boolean read) {readData = read;}
+    public void flipReadData() {readData = !readData;}
 
     /**
      * getter method for the readData variable in Model
@@ -108,19 +103,5 @@ public class Model {
      * @return List of Shelters of the Model
      */
     public List<Shelter> getShelters() {return shelters;}
-
-    /**
-     * getter method for the list of Users of the Model
-     * @return String representation of the list of Users of the Model
-     */
-    public String getUsers() {
-        return users.toString();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public List<User> getUserList(){return users;}
 
 }

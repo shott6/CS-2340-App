@@ -22,6 +22,7 @@ public class OpeningActivity extends AppCompatActivity {
         //login button switches to login activity
         Button _loginButton = findViewById(R.id.LoginButton);
         _loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
@@ -30,6 +31,7 @@ public class OpeningActivity extends AppCompatActivity {
 
         Button RegisterButton = findViewById(R.id.RegisterButton);
         RegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
                 startActivity(intent);
