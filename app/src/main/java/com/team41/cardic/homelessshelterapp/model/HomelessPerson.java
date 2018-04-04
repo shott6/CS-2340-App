@@ -9,6 +9,13 @@ public class HomelessPerson extends User {
     private int numberCheckedIn = 0;
     private boolean checkedIn = false;
 
+    /**
+     * constructor for the HomelessPerson class that takes in the person's info
+     * @param _firstName
+     * @param _lastName
+     * @param _username
+     * @param _password
+     */
     public HomelessPerson(String _firstName, String _lastName, String _username, String _password) {
         super(_firstName, _lastName, _username, _password, false, false);
     }
