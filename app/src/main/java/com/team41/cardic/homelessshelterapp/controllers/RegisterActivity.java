@@ -89,7 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("thisone", user.toString());
                 model.addUser(user);
                 writeNewUser(firstName, lastName, username, password);
-                Log.d("Tag", "modelPrint: " + model.getUsers());
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
             }

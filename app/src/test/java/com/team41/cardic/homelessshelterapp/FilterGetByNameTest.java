@@ -34,7 +34,7 @@ public class FilterGetByNameTest {
     @Before
     public void setup() {
         model.setShelters(new ArrayList<Shelter>());
-        model.addShelter(new Shelter(0, name, "", "",LONG, LAT, "", "", ""));
+        model.addShelter(new Shelter(0, name, "", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(1, "notThis", "", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(2, "no", "", "", LONG, LAT, "", "", ""));
     }

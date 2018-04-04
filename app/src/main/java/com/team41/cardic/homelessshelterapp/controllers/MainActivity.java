@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Log.d("CheckDs", "dsValue: " + ds.getValue().toString());
                     String refCapacity = ds.getValue().toString();
-                    if (Integer.parseInt(ds.getKey()) < 13) {
+                    if (Integer.parseInt(ds.getKey()) < model.getShelters().size()) {
                         int capacity = Integer.parseInt(refCapacity/*.replaceAll("[^0-9]", "")*/);
                         Log.d("testinghere", "key: " + ds.getKey());
                         model.getShelters().get(Integer.parseInt(ds.getKey())).setCapacity("" + capacity);
