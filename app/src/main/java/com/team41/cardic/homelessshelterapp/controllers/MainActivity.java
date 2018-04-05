@@ -1,8 +1,10 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import com.team41.cardic.homelessshelterapp.model.Shelter;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.team41.cardic.homelessshelterapp.model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,13 +53,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final List<Shelter> modelShelters = model.getShelters();
+        int modelSheltersSize = modelShelters.size();
+
         searchBar = findViewById(R.id.search_Bar);
         errorView = findViewById(R.id.errorView);
         if (!model.getReadData()) {
             this.readShelterFile();
         } else {
-            for (int i = 0; i < model.getShelters().size(); i++) {
-                shelterNames.add(model.getShelters().get(i).getName());
+            for (int i = 0; i < modelSheltersSize; i++) {
+                Shelter currentModelShelter = modelShelters.get(i);
+                shelterNames.add(currentModelShelter.getName());
             }
         }
 
@@ -74,27 +81,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (model.getCurrentUser() instanceof HomelessPerson) {
-                    if (((HomelessPerson) model.getCurrentUser()).getCheckedIn()) {
-                        int newCapacity = Integer.parseInt(model.getShelters().
-                                get(((HomelessPerson) model.getCurrentUser()).
-                                        getCurrentShelter()).getCapacity());
-                        newCapacity = newCapacity +
-                                ((HomelessPerson) model.getCurrentUser()).getNumberCheckedIn();
-                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().
-                                child("users").child(model.getCurrentUser().getUsername());
-                        userRef.child("checkedIn").setValue(false);
-                        userRef.child("numberCheckedIn").setValue(0);
-                        userRef.child("currentShelter").setValue(-1);
+                    HomelessPerson modelCurrentUser = (HomelessPerson) model.getCurrentUser();
+                    if (modelCurrentUser.getCheckedIn()) {
+                        int modelCurrentUserCurrentSheltID = modelCurrentUser.getCurrentShelter();
+                        Shelter modelCurrentUserCurrentShelt = modelShelters.
+                                                                get(modelCurrentUserCurrentSheltID);
+                        int newCapacity = Integer.
+                                            parseInt(modelCurrentUserCurrentShelt.getCapacity());
+                        newCapacity = newCapacity + modelCurrentUser.getNumberCheckedIn();
 
-                        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().
-                                getReference().child("shelters");
-                        sheltListRef.child("" +((HomelessPerson) model.getCurrentUser()).
-                                getCurrentShelter()).setValue(newCapacity);
-                        model.getShelters().get(((HomelessPerson) model.getCurrentUser()).
-                                getCurrentShelter()).setCapacity("" + newCapacity);
-                        ((HomelessPerson) model.getCurrentUser()).setNumberCheckedIn(0);
-                        ((HomelessPerson) model.getCurrentUser()).setCheckedIn(false);
-                        ((HomelessPerson) model.getCurrentUser()).setCurrentShelter(-1);
+                        FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
+                        DatabaseReference dataRef = dataInstance.getReference();
+                        DatabaseReference usersRef = dataRef.child("users");
+                        DatabaseReference userRef = usersRef.child(modelCurrentUser.getUsername());
+                        DatabaseReference checkedInRef = userRef.child("checkedIn");
+                        DatabaseReference numCheckedInRef = userRef.child("numberCheckedIn");
+                        DatabaseReference curSheltRef = userRef.child("currentShelter");
+
+                        checkedInRef.setValue(false);
+                        numCheckedInRef.setValue(0);
+                        curSheltRef.setValue(-1);
+
+                        DatabaseReference sheltListRef = dataRef.child("shelters");
+                        DatabaseReference sheltRefCurShelt = sheltListRef.
+                                                        child("" + modelCurrentUserCurrentSheltID);
+                        sheltRefCurShelt.setValue(newCapacity);
+                        modelCurrentUserCurrentShelt.setCapacity("" + newCapacity);
+                        modelCurrentUser.setNumberCheckedIn(0);
+                        modelCurrentUser.setCheckedIn(false);
+                        modelCurrentUser.setCurrentShelter(-1);
                     } else {
                         errorView.setVisibility(View.VISIBLE);
                         errorView.setError("You are not checked into a shelter.");
@@ -111,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String searchString = searchBar.getText().toString();
+                Editable searchEditable = searchBar.getText();
+                String searchString = searchEditable.toString();
                 Log.d("checkText", "search: " + searchString);
                 Intent intent = new Intent(getBaseContext(), SearchResultsActivity.class);
                 intent.putExtra("SEARCH_STRING", searchString);
@@ -122,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         shelterSpinner = findViewById(R.id.shelterSpinner);
 
-        ArrayAdapter<String> shelterAdapter = new ArrayAdapter<>
+        final ArrayAdapter<String> shelterAdapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_spinner_item, shelterNames);
         shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shelterSpinner.setAdapter(shelterAdapter);
@@ -135,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cur = shelterSpinner.getSelectedItem().toString();
                 int index = shelterNames.indexOf(cur);
-                model.setCurrentShelter(model.getShelters().get(index));
+                model.setCurrentShelter(modelShelters.get(index));
 
                 Intent intent = new Intent(getBaseContext(), ShelterDetailsActivity.class);
                 startActivity(intent);
@@ -149,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
      * to create unique Shelters based on the information given within the csv
      */
     private void readShelterFile() {
+        final List<Shelter> modelShelters = model.getShelters();
 
         try {
             InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
@@ -178,26 +195,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Main", "error reading assets", e);
             }
         model.setShelters(shelters);
-        Log.d("lookhere2", "modelShelters: " + model.getShelters().toString());
+        Log.d("lookhere2", "modelShelters: " + modelShelters);
 
         model.flipReadData();
 
 
 
-
-        DatabaseReference sheltListRef = FirebaseDatabase.getInstance().getReference().
-                child("shelters");
+        FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
+        DatabaseReference dataRef = dataInstance.getReference();
+        DatabaseReference sheltListRef = dataRef.child("shelters");
         sheltListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Log.d("CheckDs", "dsValue: " + ds.getValue().toString());
                     String refCapacity = ds.getValue().toString();
-                    if (Integer.parseInt(ds.getKey()) < model.getShelters().size()) {
-                        int capacity = Integer.parseInt(refCapacity/*.replaceAll("[^0-9]", "")*/);
-                        Log.d("testinghere", "key: " + ds.getKey());
-                        model.getShelters().get(Integer.parseInt(ds.getKey())).
-                                setCapacity("" + capacity);
+                    if (Integer.parseInt(ds.getKey()) < modelShelters.size()) {
+                        int capacity = Integer.parseInt(refCapacity);
+                        Shelter dsShelter = modelShelters.get(Integer.parseInt(ds.getKey()));
+                        dsShelter.setCapacity("" + capacity);
                     }
                 }
             }

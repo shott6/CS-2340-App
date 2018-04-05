@@ -3,6 +3,7 @@ package com.team41.cardic.homelessshelterapp.controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
+import com.team41.cardic.homelessshelterapp.model.Shelter;
+
+import java.util.List;
 
 /**
  * This class controls checking in a User to a shelter. If a User decides to check in, the
@@ -28,6 +32,9 @@ public class ShelterDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_details);
+
+        List<Shelter> modelShelters = model.getShelters();
+        final Shelter modelCurrentShelter = model.getCurrentShelter();
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -46,29 +53,35 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                     HomelessPerson person = (HomelessPerson) model.getCurrentUser();
                     if (!person.getCheckedIn()) {
                         try {
-                            if ((Integer.parseInt(model.getCurrentShelter().getCapacity()) -
-                                    Integer.parseInt(numberCheckIn.getText().toString())) > 0) {
+                            Editable numCheckInEditable = numberCheckIn.getText();
+                            String numCheckIn = numCheckInEditable.toString();
+
+                            if ((Integer.parseInt(modelCurrentShelter.getCapacity()) -
+                                    Integer.parseInt(numCheckIn)) > 0) {
                                 person.setCheckedIn(true);
-                                person.setNumberCheckedIn(Integer.parseInt(numberCheckIn.
-                                                            getText().toString()));
-                                person.setCurrentShelter(model.getCurrentShelter().getUniqueKey());
-                                DatabaseReference curUser = FirebaseDatabase.getInstance().
-                                        getReference().child("users").child(person.getUsername());
-                                curUser.child("checkedIn").setValue(true);
-                                curUser.child("numberCheckedIn").setValue(Integer.
-                                                    parseInt(numberCheckIn.getText().toString()));
-                                curUser.child("currentShelter").setValue(model.getCurrentShelter().
-                                                        getUniqueKey());
+                                person.setNumberCheckedIn(Integer.parseInt(numCheckIn));
+                                person.setCurrentShelter(modelCurrentShelter.getUniqueKey());
 
+                                FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
+                                DatabaseReference dataRef = dataInstance.getReference();
+                                DatabaseReference usersRef = dataRef.child("users");
+                                DatabaseReference curUser = usersRef.child(person.getUsername());
+                                DatabaseReference checkedInRef = curUser.child("checkedIn");
+                                DatabaseReference numCheckedInRef = curUser.child("numberCheckedIn");
+                                DatabaseReference curSheltRef = curUser.child("currentShelter");
 
-                                DatabaseReference sheltListRef = FirebaseDatabase.getInstance().
-                                                        getReference().child("shelters");
-                                String newCapacity = "" + (Integer.parseInt(model.
-                                        getCurrentShelter().getCapacity()) -
-                                        Integer.parseInt(numberCheckIn.getText().toString()));
-                                sheltListRef.child("" + model.getCurrentShelter().getUniqueKey()).
-                                        setValue(Integer.parseInt(newCapacity));
-                                model.getCurrentShelter().setCapacity(newCapacity);
+                                checkedInRef.setValue(true);
+                                numCheckedInRef.setValue(Integer.parseInt(numCheckIn));
+                                curSheltRef.setValue(modelCurrentShelter.getUniqueKey());
+
+                                DatabaseReference sheltListRef = dataRef.child("shelters");
+                                String newCapacity = "" + (Integer.parseInt(modelCurrentShelter
+                                                            .getCapacity()) -
+                                        Integer.parseInt(numCheckIn));
+                                int modelCurSheltID = modelCurrentShelter.getUniqueKey();
+                                DatabaseReference sheltersCurSheltRef = sheltListRef.child("" + modelCurSheltID);
+                                sheltersCurSheltRef.setValue(Integer.parseInt(newCapacity));
+                                modelCurrentShelter.setCapacity(newCapacity);
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(intent);
                             } else {
@@ -91,25 +104,25 @@ public class ShelterDetailsActivity extends AppCompatActivity {
         });
 
         TextView shelterName = findViewById(R.id.shelterNameInput);
-        shelterName.setText(model.getCurrentShelter().getName());
+        shelterName.setText(modelCurrentShelter.getName());
 
         TextView capacity = findViewById(R.id.capacityInput);
-        capacity.setText(model.getCurrentShelter().getCapacity());
+        capacity.setText(modelCurrentShelter.getCapacity());
 
         TextView restrictions = findViewById(R.id.restrictionsInput);
-        restrictions.setText(model.getCurrentShelter().getGender());
+        restrictions.setText(modelCurrentShelter.getGender());
 
         TextView longitude = findViewById(R.id.longitudeInput);
-        longitude.setText("" + model.getCurrentShelter().getLongitude());
+        longitude.setText("" + modelCurrentShelter.getLongitude());
 
         TextView latitude = findViewById(R.id.latitudeInput);
-        latitude.setText("" + model.getCurrentShelter().getLatitude());
+        latitude.setText("" + modelCurrentShelter.getLatitude());
 
         TextView specialNotes = findViewById(R.id.specialNotesInput);
-        specialNotes.setText(model.getCurrentShelter().getSpecialNotes());
+        specialNotes.setText(modelCurrentShelter.getSpecialNotes());
 
         TextView phoneNumber = findViewById(R.id.phoneNumberInput);
-        phoneNumber.setText(model.getCurrentShelter().getPhoneNumber());
+        phoneNumber.setText(modelCurrentShelter.getPhoneNumber());
 
         numberCheckIn = findViewById(R.id.numberCheckIn);
     }

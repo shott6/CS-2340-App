@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,10 +52,17 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText musername = findViewById(R.id.username);
                 EditText mpassword = findViewById(R.id.password);
 
-                String firstName = mfirstName.getText().toString();
-                String lastName = mlastName.getText().toString();
-                String username = musername.getText().toString();
-                String password = mpassword.getText().toString();
+                Editable firstNameEditable = mfirstName.getText();
+                String firstName = firstNameEditable.toString();
+
+                Editable lastNameEditable = mlastName.getText();
+                String lastName = lastNameEditable.toString();
+
+                Editable usernameEditable = musername.getText();
+                String username = usernameEditable.toString();
+
+                Editable passwordEditable = mpassword.getText();
+                String password = passwordEditable.toString();
                 User user;
                 if (adminChecked) {
                     user = new    Admin(firstName, lastName, username, password);
@@ -80,13 +88,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void writeNewUser(String fName, String lName, String uName, String pWord) {
+        DatabaseReference usersRef = mDatabase.child("users");
+        DatabaseReference usernameRef = usersRef.child(uName);
         if (adminChecked) {
             Admin toAdd = new Admin(fName, lName, uName, pWord);
-            mDatabase.child("users").child(uName).setValue(toAdd);
+            usernameRef.setValue(toAdd);
         } else {
             HomelessPerson toAdd = new HomelessPerson(fName, lName, uName, pWord);
-            mDatabase.child("users").child(uName).setValue(toAdd);
-            mDatabase.child("users").child(uName).child("currentShelter").setValue(null);
+            usernameRef.setValue(toAdd);
+            DatabaseReference curSheltRef = usernameRef.child("currentShelter");
+            curSheltRef.setValue(null);
         }
     }
 }

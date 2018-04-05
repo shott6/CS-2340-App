@@ -1,7 +1,9 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -34,7 +36,8 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
         String searchString;
         Spinner resSpinner;
 
-        searchString = getIntent().getStringExtra("SEARCH_STRING");
+        Intent lastIntent = getIntent();
+        searchString = lastIntent.getStringExtra("SEARCH_STRING");
         List<Shelter> temp = new ArrayList<>();
         //search through shelter names
         searchFilter.getByName(searchString);
@@ -95,7 +98,8 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
 
         resSpinner = findViewById(R.id.resSpinner);
         for (int i = 0; i < searchResults.size(); i++) {
-            shelterNames.add(searchResults.get(i).getName());
+            Shelter currentSearchResult = searchResults.get(i);
+            shelterNames.add(currentSearchResult.getName());
         }
 
         ArrayAdapter<String> shelterAdapter = new ArrayAdapter<>
@@ -103,7 +107,8 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
         shelterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         resSpinner.setAdapter(shelterAdapter);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().
+        FragmentManager supportFragManager = getSupportFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment) supportFragManager.
                 findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
     }

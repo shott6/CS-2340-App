@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shott on 4/2/18.
@@ -51,9 +52,11 @@ public class FilterGetByNameTest {
         correctShelts[0] = name;
         correctSheltsSize = 1;
         filter.getByName(name);
-        for (int i = 0; i < filter.getFilteredShelters().size(); i++) {
-            Assert.assertEquals(correctShelts[i], filter.getFilteredShelters().get(i).getName());
-            Assert.assertEquals(correctSheltsSize, filter.getFilteredShelters().size());
+        List<Shelter> filteredShelters = filter.getFilteredShelters();
+        for (int i = 0; i < filteredShelters.size(); i++) {
+            Shelter currentFilteredShelter = filteredShelters.get(i);
+            Assert.assertEquals(correctShelts[i], currentFilteredShelter.getName());
+            Assert.assertEquals(correctSheltsSize, filteredShelters.size());
         }
     }
 
@@ -68,9 +71,11 @@ public class FilterGetByNameTest {
         correctShelts[1] = name;
         correctSheltsSize = 2;
         filter.getByName(name);
-        for (int i = 0; i < filter.getFilteredShelters().size(); i++) {
-            Assert.assertEquals(correctShelts[i], filter.getFilteredShelters().get(i).getName());
-            Assert.assertEquals(correctSheltsSize, filter.getFilteredShelters().size());
+        List<Shelter> filteredShelters = filter.getFilteredShelters();
+        for (int i = 0; i < filteredShelters.size(); i++) {
+            Shelter currentFilteredShelter = filteredShelters.get(i);
+            Assert.assertEquals(correctShelts[i], currentFilteredShelter.getName());
+            Assert.assertEquals(correctSheltsSize, filteredShelters.size());
         }
     }
 

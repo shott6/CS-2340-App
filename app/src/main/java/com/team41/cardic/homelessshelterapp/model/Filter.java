@@ -9,6 +9,9 @@ import java.util.List;
 
 public class Filter {
     private final Model model = Model.getInstance();
+    private final List<Shelter> modelShelters = model.getShelters();
+    private final int modelSheltersSize = modelShelters.size();
+
     private final List<Shelter> filteredShelters = new ArrayList<>();
 
     /**
@@ -17,9 +20,10 @@ public class Filter {
      * @param name String of the name of the Shelter that you want to search for
      */
     public void getByName(String name) {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getName().equals(name)) {
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
+            String currentShelterName = currentShelter.getName();
+            if(currentShelterName.equals(name)) {
                 filteredShelters.add(currentShelter);
             }
         }
@@ -30,10 +34,11 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getFemaleOnly() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Women") ||
-                    currentShelter.getGender().contains("anyGender")) {
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
+            String currentShelterGender = currentShelter.getGender();
+            if(currentShelterGender.contains("Women") ||
+                    currentShelterGender.contains("anyGender")) {
                 filteredShelters.add(currentShelter);
             }
         }
@@ -44,10 +49,11 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getMaleOnly() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Men") ||
-                    currentShelter.getGender().contains("anyGender")) {
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
+            String currentShelterGender = currentShelter.getGender();
+            if(currentShelterGender.contains("Men") ||
+                    currentShelterGender.contains("anyGender")) {
                 filteredShelters.add(currentShelter);
             }
         }
@@ -58,8 +64,8 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getNewborns() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
             String currentShelterGender = currentShelter.getGender();
             if(currentShelterGender.contains("Newborns") ||
                     currentShelterGender.contains("anyAge") ||
@@ -74,8 +80,8 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getFamilies() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
             String currentShelterFamilies = currentShelter.getGender();
             if(currentShelterFamilies.contains("Children") ||
                     currentShelterFamilies.contains("anyAge") ||
@@ -90,8 +96,8 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getYoungAdults() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
             String currentShelterYA = currentShelter.getGender();
             if(currentShelterYA.contains("Young adults") ||
                     currentShelterYA.contains("anyAge") ||
@@ -106,10 +112,11 @@ public class Filter {
      * and adds those shelters to the filteredShelters list
      */
     public void getAnyone() {
-        for(int i = 0; i < model.getShelters().size(); i++) {
-            Shelter currentShelter = model.getShelters().get(i);
-            if(currentShelter.getGender().contains("Anyone") ||
-                    currentShelter.getGender().contains("anyAge")) {
+        for(int i = 0; i < modelSheltersSize; i++) {
+            Shelter currentShelter = modelShelters.get(i);
+            String currentShelterGender = currentShelter.getGender();
+            if(currentShelterGender.contains("Anyone") ||
+                    currentShelterGender.contains("anyAge")) {
                 filteredShelters.add(currentShelter);
             }
         }
