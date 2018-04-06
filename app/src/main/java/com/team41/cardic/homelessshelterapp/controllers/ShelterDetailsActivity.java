@@ -27,14 +27,13 @@ public class ShelterDetailsActivity extends AppCompatActivity {
     private EditText numberCheckIn;
 
     private final Model model = Model.getInstance();
+    private final Shelter modelCurrentShelter = model.getCurrentShelter();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_details);
-
-        List<Shelter> modelShelters = model.getShelters();
-        final Shelter modelCurrentShelter = model.getCurrentShelter();
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

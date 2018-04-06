@@ -28,6 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private boolean adminChecked;
     private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private final Model model = Model.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Model model = Model.getInstance();
                 EditText mfirstName = findViewById(R.id.firstName);
                 EditText mlastName = findViewById(R.id.lastName);
                 EditText musername = findViewById(R.id.username);
