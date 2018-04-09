@@ -81,6 +81,11 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
 
         Log.d("checkFilter", "name search: " + searchResults.toString());
 
+        onCreateHelper();
+
+    }
+    private void onCreateHelper() {
+        Spinner resSpinner;
         resSpinner = findViewById(R.id.resSpinner);
         for (int i = 0; i < searchResults.size(); i++) {
             Shelter currentSearchResult = searchResults.get(i);
