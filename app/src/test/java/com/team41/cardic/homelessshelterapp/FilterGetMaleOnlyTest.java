@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Created by ddanniell3 on 2/9/18.
+ */
 public class FilterGetMaleOnlyTest {
     private final Filter filter = new Filter();
 
@@ -21,7 +24,8 @@ public class FilterGetMaleOnlyTest {
     private final Model model = Model.getInstance();
 
     /**
-     * Method that sets up the shelters array list in model to contain test shelters with different genders
+     * Method that sets up the shelters array list in model to contain test shelters with different
+     * genders
      */
     @Before
     public void setup() {
@@ -52,7 +56,8 @@ public class FilterGetMaleOnlyTest {
     }
 
     /**
-     * Method that makes sure filter's getMaleOnly method works when there are no shelters in the model list
+     * Method that makes sure filter's getMaleOnly method works when there are no shelters in the
+     * model list
      */
     @Test
     public void testEmpty() {
