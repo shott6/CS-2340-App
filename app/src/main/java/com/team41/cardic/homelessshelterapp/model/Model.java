@@ -24,24 +24,13 @@ public final class Model {
 
     private Shelter currentShelter;
 
-    private final List<User> users;
-
     private User currentUser;
 
     private boolean readData = false;
 
     private Model() {
 
-        users = new ArrayList<>();
         shelters = new ArrayList<>();
-    }
-
-    /**
-     * method that allows an isntance of User to be added to the list of Users that Model holds
-     * @param user an instance of the User class to be added to the Model
-     */
-    public void addUser(User user) {
-        users.add(user);
     }
 
     /**

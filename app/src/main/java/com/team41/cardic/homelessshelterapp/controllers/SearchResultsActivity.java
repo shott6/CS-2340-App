@@ -84,6 +84,10 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
         onCreateHelper();
 
     }
+
+    /**
+     * Helps to make onCreate shorter by handling the spinner and the map setup
+     */
     private void onCreateHelper() {
         Spinner resSpinner;
         resSpinner = findViewById(R.id.resSpinner);
@@ -125,7 +129,7 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
      * Transfers the Shelters in the filter object's list into the searchResults list and then
      *      clears the list in the filter object
      */
-    public void moveToSearchResults() {
+    private void moveToSearchResults() {
         List<Shelter> temp = searchFilter.getFilteredShelters();
         searchResults.addAll(temp);
         searchFilter.clearShelterList();
@@ -134,42 +138,42 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
     /**
      * Tells the filter to search by female only shelters
      */
-    public void femaleOnly() {
+    private void femaleOnly() {
         searchFilter.getFemaleOnly();
     }
 
     /**
      * * Tells the filter to search by male only shelters
      */
-    public void maleOnly() {
+    private void maleOnly() {
         searchFilter.getMaleOnly();
     }
 
     /**
      * * Tells the filter to search for filters that accept newborns
      */
-    public void newborns() {
+    private void newborns() {
         searchFilter.getNewborns();
     }
 
     /**
      * Tells the filter to search for filters that accept families
      */
-    public void families() {
+    private void families() {
         searchFilter.getFamilies();
     }
 
     /**
      * Tells the filter to search for filters that accept young adults
      */
-    public void youngAdults() {
+    private void youngAdults() {
         searchFilter.getYoungAdults();
     }
 
     /**
      * Tells the filter to search for filters that accept anyone
      */
-    public void anyone() {
+    private void anyone() {
         searchFilter.getAnyone();
     }
 }
