@@ -23,11 +23,11 @@ public class FilterGetNewbornsTest {
     private final String[] newbornShelters = new String[4];
     private final Model testModel = Model.getInstance();
 
-    @Before
     /**
      * This method sets up randomized shelters with certain gender restrictions. Some of these
      * created Shelters allow Newborns whereas the rest do not.
      */
+    @Before
     public void setup() {
         testFilter.clearShelterList();
         testModel.clearShelters();
@@ -41,12 +41,12 @@ public class FilterGetNewbornsTest {
         testModel.addShelter(new Shelter(3, "", "", restriction4, LONG, LAT, "", "", ""));
     }
 
-    @Test
     /**
      * This method performs the actual test to ensure that the filter method .getNewborns()
      * correctly adds the shelters that allow for Newborns while in tandem testing for the
      * correct size of filtered shelters.
      */
+    @Test
     public void testNewbornRestrictionEquality() {
         newbornShelters[0] = restriction1;
         newbornShelters[1] = restriction4;
