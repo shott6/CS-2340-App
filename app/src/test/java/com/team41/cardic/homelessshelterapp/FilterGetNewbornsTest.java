@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 
+/**
+ * JUnit Test class for the .getNewborns() method within the Filter class.
+ */
 public class FilterGetNewbornsTest {
     private final Filter testFilter = new Filter();
 
@@ -21,6 +24,10 @@ public class FilterGetNewbornsTest {
     private final Model testModel = Model.getInstance();
 
     @Before
+    /**
+     * This method sets up randomized shelters with certain gender restrictions. Some of these
+     * created Shelters allow Newborns whereas the rest do not.
+     */
     public void setup() {
         testFilter.clearShelterList();
         testModel.clearShelters();
@@ -35,6 +42,11 @@ public class FilterGetNewbornsTest {
     }
 
     @Test
+    /**
+     * This method performs the actual test to ensure that the filter method .getNewborns()
+     * correctly adds the shelters that allow for Newborns while in tandem testing for the
+     * correct size of filtered shelters.
+     */
     public void testNewbornRestrictionEquality() {
         newbornShelters[0] = restriction1;
         newbornShelters[1] = restriction4;
