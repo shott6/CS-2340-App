@@ -50,13 +50,13 @@ public class FilterGetNewbornsTest {
     }
 
     /**
-     * Method that makes sure filter's getMaleOnly method works when there are no shelters in the model list
+     * Method that makes sure filter's getNewborns method works when there are no shelters in the model list
      */
     @Test
     public void testEmpty() {
         testModel.clearShelters();
         testFilter.clearShelterList();
-        testFilter.getMaleOnly();
+        testFilter.getNewborns();
 
         Assert.assertEquals(new ArrayList<Shelter>(), testFilter.getFilteredShelters());
     }
