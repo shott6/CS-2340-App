@@ -32,8 +32,8 @@ public class FilterGetMaleOnlyTest {
     public void setup() {
         model.setShelters(new ArrayList<Shelter>());
         String name = "Shelter1";
-        double LONG = 3.14;
-        double LAT = 1.59;
+        final double LONG = 3.14;
+        final double LAT = 1.59;
         model.addShelter(new Shelter(0, name, "", nameGender, LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(1, "a name", "Women", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(2, "name2", "", nameGender2, LONG, LAT, "", "", ""));
