@@ -31,8 +31,8 @@ public class FilterGetNewbornsTest {
     public void setup() {
         testFilter.clearShelterList();
         testModel.clearShelters();
-        double LONG = 44.44;
-        double LAT = 12345.12345;
+        final double LONG = 44.44;
+        final double LAT = 12345.12345;
         testModel.addShelter(new Shelter(0, "", "", restriction1, LONG, LAT, "", "", ""));
         String restriction2 = "ewborns";
         testModel.addShelter(new Shelter(1, "", "", restriction2, LONG, LAT, "", "", ""));
