@@ -34,7 +34,6 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
         setContentView(R.layout.activity_search_results);
 
         String searchString;
-        Spinner resSpinner;
 
         Intent lastIntent = getIntent();
         searchString = lastIntent.getStringExtra("SEARCH_STRING");

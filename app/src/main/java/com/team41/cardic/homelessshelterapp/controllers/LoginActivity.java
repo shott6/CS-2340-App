@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                                 matched = true;
                             }
                             if (matched) {
-                                if (refAdmin.getAdmin()) {
+                                if (isAdmin) {
                                     model.setCurrentUser(refAdmin);
                                 } else {
                                     model.setCurrentUser(refHomeless);

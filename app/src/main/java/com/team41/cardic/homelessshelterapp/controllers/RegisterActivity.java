@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private boolean adminChecked;
     private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private final Model model = Model.getInstance();
 
 
     @Override
