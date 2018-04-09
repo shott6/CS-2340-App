@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by shott on 3/6/18.
+ * Works to create an Arraylist that contains shelters that only match certain filter categories
  */
 
 public class Filter {

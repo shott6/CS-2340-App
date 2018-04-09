@@ -1,7 +1,7 @@
 package com.team41.cardic.homelessshelterapp.model;
 
 /**
- * Created by mmcke on 2/26/2018.
+ * Object that holds all info and methods relevant to each Shelter
  */
 
 public class Shelter {

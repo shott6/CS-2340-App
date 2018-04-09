@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by shott on 4/2/18.
+ * Test that checks to make sure Filter's getByName method works correctly
  */
 
 public class FilterGetByNameTest {
