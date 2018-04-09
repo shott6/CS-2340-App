@@ -27,6 +27,7 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
     private final Filter searchFilter = new Filter();
     private final List<Shelter> searchResults = new ArrayList<>();
     private final List<String> shelterNames = new ArrayList<>();
+    private List<Shelter> temp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,59 +39,44 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
 
         Intent lastIntent = getIntent();
         searchString = lastIntent.getStringExtra("SEARCH_STRING");
-        List<Shelter> temp = new ArrayList<>();
         //search through shelter names
         searchFilter.getByName(searchString);
-        temp = searchFilter.getFilteredShelters();
-        searchResults.addAll(temp);
-        searchFilter.clearShelterList();
+        moveToSearchResults();
 
         //search for female only (if requested)
         if("Female".equals(searchString) || "female".equals(searchString))  {
-            searchFilter.getFemaleOnly();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            femaleOnly();
+            moveToSearchResults();
         }
 
         //search for male only (if requested)
         if("Male".equals(searchString) || "male".equals(searchString))  {
-            searchFilter.getMaleOnly();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            maleOnly();
+            moveToSearchResults();
         }
 
         //search for newborns acceptance(if requested)
         if("Newborns".equals(searchString) || "newborns".equals(searchString))  {
-            searchFilter.getNewborns();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            newborns();
+            moveToSearchResults();
         }
 
         //search for family acceptance(if requested)
         if("Children".equals(searchString) || "children".equals(searchString))  {
-            searchFilter.getFamilies();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            families();
+            moveToSearchResults();
         }
 
         //search for young adult acceptance(if requested)
         if("Young adult".equals(searchString) || "young adult".equals(searchString))  {
-            searchFilter.getYoungAdults();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            youngAdults();
+            moveToSearchResults();
         }
 
         //search for shelters that accept anyone(if requested)
         if("Anyone".equals(searchString) || "anyone".equals(searchString))  {
-            searchFilter.getAnyone();
-            temp = searchFilter.getFilteredShelters();
-            searchResults.addAll(temp);
-            searchFilter.clearShelterList();
+            anyone();
+            moveToSearchResults();
         }
 
 
@@ -129,5 +115,35 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
                     snippet(shelt.getPhoneNumber()));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
+    }
+
+    public void moveToSearchResults() {
+        temp = searchFilter.getFilteredShelters();
+        searchResults.addAll(temp);
+        searchFilter.clearShelterList();
+    }
+
+    public void femaleOnly() {
+        searchFilter.getFemaleOnly();
+    }
+
+    public void maleOnly() {
+        searchFilter.getMaleOnly();
+    }
+
+    public void newborns() {
+        searchFilter.getNewborns();
+    }
+
+    public void families() {
+        searchFilter.getFamilies();
+    }
+
+    public void youngAdults() {
+        searchFilter.getYoungAdults();
+    }
+
+    public void anyone() {
+        searchFilter.getAnyone();
     }
 }
