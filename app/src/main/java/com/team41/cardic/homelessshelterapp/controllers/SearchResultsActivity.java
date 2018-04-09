@@ -27,7 +27,6 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
     private final Filter searchFilter = new Filter();
     private final List<Shelter> searchResults = new ArrayList<>();
     private final List<String> shelterNames = new ArrayList<>();
-    private List<Shelter> temp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +117,7 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
     }
 
     public void moveToSearchResults() {
-        temp = searchFilter.getFilteredShelters();
+        List<Shelter> temp = searchFilter.getFilteredShelters();
         searchResults.addAll(temp);
         searchFilter.clearShelterList();
     }
