@@ -10,7 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Created by ddanniell3 on 2/9/18.
+ */
 public class FilterGetMaleOnlyTest {
     private final Filter filter = new Filter();
 
@@ -21,14 +25,15 @@ public class FilterGetMaleOnlyTest {
     private final Model model = Model.getInstance();
 
     /**
-     * Method that sets up the shelters array list in model to contain test shelters with different genders
+     * Method that sets up the shelters array list in model to contain test shelters with different
+     * genders
      */
     @Before
     public void setup() {
         model.setShelters(new ArrayList<Shelter>());
         String name = "Shelter1";
-        double LONG = 3.14;
-        double LAT = 1.59;
+        final double LONG = 3.14;
+        final double LAT = 1.59;
         model.addShelter(new Shelter(0, name, "", nameGender, LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(1, "a name", "Women", "", LONG, LAT, "", "", ""));
         model.addShelter(new Shelter(2, "name2", "", nameGender2, LONG, LAT, "", "", ""));
@@ -45,14 +50,17 @@ public class FilterGetMaleOnlyTest {
         correctShelters[1] = nameGender2;
         int correctSheltersSize = 2;
         filter.getMaleOnly();
-        for (int i = 0; i < filter.getFilteredShelters().size(); i++) {
-            Assert.assertEquals(correctShelters[i], filter.getFilteredShelters().get(i).getGender());
-            Assert.assertEquals(correctSheltersSize, filter.getFilteredShelters().size());
+        List<Shelter> filteredShelters = filter.getFilteredShelters();
+        for (int i = 0; i < filteredShelters.size(); i++) {
+            Shelter currentShelter = filteredShelters.get(i);
+            Assert.assertEquals(correctShelters[i], currentShelter.getGender());
+            Assert.assertEquals(correctSheltersSize, filteredShelters.size());
         }
     }
 
     /**
-     * Method that makes sure filter's getMaleOnly method works when there are no shelters in the model list
+     * Method that makes sure filter's getMaleOnly method works when there are no shelters in the
+     * model list
      */
     @Test
     public void testEmpty() {
