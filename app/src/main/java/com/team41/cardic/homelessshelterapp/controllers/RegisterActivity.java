@@ -66,12 +66,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordEditable.toString();
                 User user;
                 if (adminChecked) {
-                    user = new    Admin(firstName, lastName, username, password);
+                    user = new Admin(firstName, lastName, username, password);
                 } else {
                     user = new HomelessPerson(firstName, lastName, username, password);
                 }
                 Log.d("thisone", user.toString());
-                model.addUser(user);
                 writeNewUser(firstName, lastName, username, password);
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
