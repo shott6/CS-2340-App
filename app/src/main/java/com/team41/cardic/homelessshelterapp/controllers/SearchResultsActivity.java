@@ -116,32 +116,54 @@ public class SearchResultsActivity extends FragmentActivity implements OnMapRead
         }
     }
 
+    /**
+     * Transfers the Shelters in the filter object's list into the searchResults list and then
+     *      clears the list in the filter object
+     */
     public void moveToSearchResults() {
         List<Shelter> temp = searchFilter.getFilteredShelters();
         searchResults.addAll(temp);
         searchFilter.clearShelterList();
     }
 
+    /**
+     * Tells the filter to search by female only shelters
+     */
     public void femaleOnly() {
         searchFilter.getFemaleOnly();
     }
 
+    /**
+     * * Tells the filter to search by male only shelters
+     */
     public void maleOnly() {
         searchFilter.getMaleOnly();
     }
 
+    /**
+     * * Tells the filter to search for filters that accept newborns
+     */
     public void newborns() {
         searchFilter.getNewborns();
     }
 
+    /**
+     * Tells the filter to search for filters that accept families
+     */
     public void families() {
         searchFilter.getFamilies();
     }
 
+    /**
+     * Tells the filter to search for filters that accept young adults
+     */
     public void youngAdults() {
         searchFilter.getYoungAdults();
     }
 
+    /**
+     * Tells the filter to search for filters that accept anyone
+     */
     public void anyone() {
         searchFilter.getAnyone();
     }
