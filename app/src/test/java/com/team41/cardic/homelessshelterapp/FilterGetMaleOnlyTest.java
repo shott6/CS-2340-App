@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ddanniell3 on 2/9/18.
@@ -49,9 +50,11 @@ public class FilterGetMaleOnlyTest {
         correctShelters[1] = nameGender2;
         int correctSheltersSize = 2;
         filter.getMaleOnly();
-        for (int i = 0; i < filter.getFilteredShelters().size(); i++) {
-            Assert.assertEquals(correctShelters[i], filter.getFilteredShelters().get(i).getGender());
-            Assert.assertEquals(correctSheltersSize, filter.getFilteredShelters().size());
+        List<Shelter> filteredShelters = filter.getFilteredShelters();
+        for (int i = 0; i < filteredShelters.size(); i++) {
+            Shelter currentShelter = filteredShelters.get(i);
+            Assert.assertEquals(correctShelters[i], currentShelter.getGender());
+            Assert.assertEquals(correctSheltersSize, filteredShelters.size());
         }
     }
 
