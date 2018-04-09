@@ -13,7 +13,7 @@ import org.junit.Test;
 import junit.framework.Assert;
 
 /**
- * JUnit Test class for the .getNewborns() method within the Filter class
+ * JUnit Test class for the .getNewborns() method within the Filter class.
  */
 public class FilterGetNewbornsTest {
     private final Filter testFilter = new Filter();
