@@ -1,7 +1,5 @@
 package com.team41.cardic.homelessshelterapp;
 
-import android.util.Log;
-
 import com.team41.cardic.homelessshelterapp.model.Filter;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
@@ -32,19 +30,24 @@ public class FilterGetByNameTest {
     private final Model model = Model.getInstance();
 
     /**
-     * Method that sets up the shelters array list in model to contain test shelters with different names
+     * Method that sets up the shelters array list in model to contain test shelters with
+     *      different names
      */
     @Before
     public void setup() {
         filter.clearShelterList();
         model.clearShelters();
-        model.addShelter(new Shelter(0, name, "", "", LONG, LAT, "", "", ""));
-        model.addShelter(new Shelter(1, "notThis", "", "", LONG, LAT, "", "", ""));
-        model.addShelter(new Shelter(2, "no", "", "", LONG, LAT, "", "", ""));
+        model.addShelter(new Shelter(0, name, "", "", LONG, LAT,
+                                     "", "", ""));
+        model.addShelter(new Shelter(1, "notThis", "", "",
+                                      LONG, LAT, "", "", ""));
+        model.addShelter(new Shelter(2, "no", "", "", LONG, LAT,
+                                     "", "", ""));
     }
 
     /**
-     * Method that tests to make sure filter's getByName method works when there is only one shelter whose name matches
+     * Method that tests to make sure filter's getByName method works when there is only one
+     *      shelter whose name matches
      * It also makes sure that the size of the associated array list is the correct size
      */
     @Test
@@ -61,12 +64,14 @@ public class FilterGetByNameTest {
     }
 
     /**
-     * Method that tests to make sure filter's getByName method works when there is more than one shelter whose name matches
+     * Method that tests to make sure filter's getByName method works when there is more than one
+     *      shelter whose name matches
      * It also makes sure that the size of the associated array list is the correct size
      */
     @Test
     public void testNameEquality2() {
-        model.addShelter(new Shelter(3, name, "", "", LONG, LAT, "", "", ""));
+        model.addShelter(new Shelter(3, name, "", "", LONG, LAT,
+                                     "", "", ""));
         correctShelts[0] = name;
         correctShelts[1] = name;
         correctSheltsSize = 2;
@@ -80,7 +85,8 @@ public class FilterGetByNameTest {
     }
 
     /**
-     * Method that makes sure filter's getByName method works when there are no shelters in the model list
+     * Method that makes sure filter's getByName method works when there are no shelters
+     *      in the model list
      */
     @Test
     public void testEmpty() {

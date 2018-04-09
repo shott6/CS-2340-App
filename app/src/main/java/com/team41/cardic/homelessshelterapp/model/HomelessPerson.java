@@ -47,13 +47,15 @@ public class HomelessPerson extends User {
 
     /**
      * setter method for the number of people this HomelessPerson has checked in
-     * @param _numCheckedIn int of the number to set for the amount of people this HomelessPerson checked in
+     * @param _numCheckedIn int of the number to set for the amount of people this
+     *                      HomelessPerson checked in
      */
     public void setNumberCheckedIn(int _numCheckedIn) {numberCheckedIn = _numCheckedIn;}
 
     /**
      * getter method for checkedIn variable of the HomelessPerson
-     * @return boolean that tells whether the HomeslessPerson is currently checkedIn to another shelter
+     * @return boolean that tells whether the HomeslessPerson is currently
+     *          checkedIn to another shelter
      */
     public boolean getCheckedIn() {return checkedIn;}
 

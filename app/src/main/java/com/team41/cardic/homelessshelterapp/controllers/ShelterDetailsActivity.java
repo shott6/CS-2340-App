@@ -15,8 +15,6 @@ import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
 
-import java.util.List;
-
 /**
  * This class controls checking in a User to a shelter. If a User decides to check in, the
  * information of that specific shelter will be updated (such as incrementing the capacity).
@@ -66,7 +64,8 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                                 DatabaseReference usersRef = dataRef.child("users");
                                 DatabaseReference curUser = usersRef.child(person.getUsername());
                                 DatabaseReference checkedInRef = curUser.child("checkedIn");
-                                DatabaseReference numCheckedInRef = curUser.child("numberCheckedIn");
+                                DatabaseReference numCheckedInRef = curUser.
+                                                                    child("numberCheckedIn");
                                 DatabaseReference curSheltRef = curUser.child("currentShelter");
 
                                 checkedInRef.setValue(true);
@@ -78,7 +77,8 @@ public class ShelterDetailsActivity extends AppCompatActivity {
                                                             .getCapacity()) -
                                         Integer.parseInt(numCheckIn));
                                 int modelCurSheltID = modelCurrentShelter.getUniqueKey();
-                                DatabaseReference sheltersCurSheltRef = sheltListRef.child("" + modelCurSheltID);
+                                DatabaseReference sheltersCurSheltRef = sheltListRef.
+                                                                        child("" + modelCurSheltID);
                                 sheltersCurSheltRef.setValue(Integer.parseInt(newCapacity));
                                 modelCurrentShelter.setCapacity(newCapacity);
                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);

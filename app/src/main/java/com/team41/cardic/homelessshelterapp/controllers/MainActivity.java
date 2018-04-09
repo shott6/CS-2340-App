@@ -1,7 +1,6 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +21,6 @@ import com.team41.cardic.homelessshelterapp.model.Shelter;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team41.cardic.homelessshelterapp.model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;

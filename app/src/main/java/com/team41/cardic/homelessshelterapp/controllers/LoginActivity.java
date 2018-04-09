@@ -1,7 +1,6 @@
 package com.team41.cardic.homelessshelterapp.controllers;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -99,19 +98,24 @@ public class LoginActivity extends AppCompatActivity {
                                 userListRef.addListenerForSingleValueEvent(new ValueEventListener(){
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        DataSnapshot currentSheltSnap = dataSnapshot.child("currentShelter");
-                                        DataSnapshot numCheckedInSnap = dataSnapshot.child("numberCheckedIn");
-                                        DataSnapshot checkedInSnap = dataSnapshot.child("checkedIn");
+                                        DataSnapshot currentSheltSnap = dataSnapshot.
+                                                                        child("currentShelter");
+                                        DataSnapshot numCheckedInSnap = dataSnapshot.
+                                                                        child("numberCheckedIn");
+                                        DataSnapshot checkedInSnap = dataSnapshot.
+                                                                     child("checkedIn");
 
                                         if(currentSheltSnap.getValue() == null){
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(-1);
                                         } else {
-                                            int curShelt = (currentSheltSnap.getValue(Integer.class));
+                                            int curShelt = (currentSheltSnap.
+                                                            getValue(Integer.class));
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(curShelt);
                                         }
-                                        int numChecked = (numCheckedInSnap.getValue(Integer.class));
+                                        int numChecked = (numCheckedInSnap.
+                                                            getValue(Integer.class));
                                         ((HomelessPerson) model.getCurrentUser()).
                                                             setNumberCheckedIn(numChecked);
                                         boolean isChecked = (boolean)checkedInSnap.getValue();
