@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by shott on 2/6/18.
+ * Singleton that helps to hold information that needs to be shared between classes
  */
-// if you're reading this, Nyima was able to push to Git  s
+
 public final class Model {
     //Singleton instance
     private static final Model _instance = new Model();

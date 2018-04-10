@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ddanniell3 on 2/9/18.
+ * Test that makes sure Filter's getMaleOnly method works correctly
  */
 public class FilterGetMaleOnlyTest {
     private final Filter filter = new Filter();
