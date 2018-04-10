@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
-import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.User;
 
 /**

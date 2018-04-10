@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
             BufferedReader br=new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            br.readLine();
             String line = br.readLine();
-            line = br.readLine();
             Log.d("Main", "this is line" + line);
 
 

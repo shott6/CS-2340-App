@@ -11,8 +11,6 @@ public abstract class User {
     private String password;
     private boolean isAdmin;
     private boolean accountLocked;
-    //contactInfo
-
 
     /**
      *
