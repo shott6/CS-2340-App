@@ -24,6 +24,7 @@ public class FilterGetMaleOnlyTest {
 
     private final Model model = Model.getInstance();
 
+
     /**
      * Method that sets up the shelters array list in model to contain test shelters with different
      * genders
