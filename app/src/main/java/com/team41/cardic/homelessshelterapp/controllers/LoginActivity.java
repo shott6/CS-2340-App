@@ -20,7 +20,7 @@ import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 
 /**
- * A login screen that offers login via username/password.
+ * A login screen that offers login via username/password..
  */
 public class LoginActivity extends AppCompatActivity {
 
