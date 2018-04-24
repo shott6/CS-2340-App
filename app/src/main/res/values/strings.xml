@@ -2,5 +2,7 @@
     <string name="app_name">Homeless Shelter App</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="facebook_app_id">844745639059505</string>
+    <string name="fb_login_protocol_scheme">fb844745639059505</string>
 
 </resources>

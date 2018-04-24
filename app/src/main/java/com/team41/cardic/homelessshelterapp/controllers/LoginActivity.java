@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.facebook.login.widget.LoginButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +20,8 @@ import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
+import com.facebook.*;
+import com.facebook.login.*;
 
 /**
  * A login screen that offers login via username/password.
@@ -27,10 +31,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUserView;
     private EditText mPasswordView;
     private final Model model = Model.getInstance();
+    private CallbackManager callbackManager;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
         mUserView = findViewById(R.id.username);
@@ -44,6 +57,23 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), ForgotPassActivity.class);
                 startActivity(intent);
             }
+        });
+
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginButton loginButton = findViewById(R.id.login_button);
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+            @Override
+            public void onCancel() {        }
+            @Override
+            public void onError(FacebookException e) {      }
         });
 
         Button SignInButton = findViewById(R.id.sign_in_button);
@@ -204,6 +234,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
         Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
