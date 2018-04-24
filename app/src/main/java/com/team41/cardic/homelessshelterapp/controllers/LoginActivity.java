@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         Button SignInButton = findViewById(R.id.sign_in_button);
         SignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         refHomeless = dataSnapshot.getValue(HomelessPerson.class);
                         refAdmin = dataSnapshot.getValue(Admin.class);
+
+                        FirebaseDatabase dataInstanceInner = FirebaseDatabase.getInstance();
+                        DatabaseReference dataRefInner = dataInstanceInner.getReference();
+                        DatabaseReference usersRefInner = dataRefInner.child("users");
+                        DatabaseReference userViewRefInner = usersRefInner.child(userViewString);
+
                         if ((refHomeless == null) || (refAdmin == null)) {
                             mUserView.setError("Invalid username");
                             mPasswordView.setError("Invalid password");
@@ -83,22 +88,67 @@ public class LoginActivity extends AppCompatActivity {
                             pRefAdmin = refAdmin.getPassword();
                             uRefHomeless = refHomeless.getUsername();
                             pRefHomeless = refHomeless.getPassword();
-                            if (userViewString.equals(uRefAdmin) &&
-                                    passwordViewString.equals(pRefAdmin)) {
-                                matched = true;
-                            } else if (userViewString.equals(uRefHomeless) &&
-                                        passwordViewString.equals(pRefHomeless)) {
-                                matched = true;
+                            if (userViewString.equals(uRefAdmin)) {
+                                if (passwordViewString.equals(pRefAdmin)) {
+                                    if (!refAdmin.getAccountLocked()) {
+                                        matched = true;
+                                    } else {
+                                        mPasswordView.setError("Your account has been locked"
+                                                + " due to excessive incorrect login attempts."
+                                                + " Please contact a system Administrator");
+                                    }
+                                } else {
+                                    int increment = refAdmin.getNumAttempts();
+                                    if (increment == 2) {
+                                        userViewRefInner.child("accountLocked").setValue(true);
+                                        mPasswordView.setError("Your account has been locked"
+                                                + " due to excessive incorrect login attempts."
+                                                + " Please contact a system Administrator");
+                                    } else {
+                                        increment++;
+                                        userViewRefInner.child("numAttempts").setValue(increment);
+                                        int leftOver = 3 - increment;
+                                        mPasswordView.setError("Invalid password. You have "
+                                                + String.valueOf(leftOver) + " more attempt(s) to"
+                                                + " login.");
+                                    }
+                                }
+                            } else if (userViewString.equals(uRefHomeless)) {
+                                if (passwordViewString.equals(pRefHomeless)) {
+                                    if (!refHomeless.getAccountLocked()) {
+                                        matched = true;
+                                    } else {
+                                        mPasswordView.setError("Your account has been locked"
+                                                + " due to excessive incorrect login attempts."
+                                                + " Please contact a system Administrator");
+                                    }
+                                } else {
+                                    int increment = refHomeless.getNumAttempts();
+                                    if (increment == 2) {
+                                        userViewRefInner.child("accountLocked").setValue(true);
+                                        mPasswordView.setError("Your account has been locked"
+                                                + " due to excessive incorrect login attempts."
+                                                + " Please contact a system Administrator");
+                                    } else {
+                                        increment++;
+                                        userViewRefInner.child("numAttempts").setValue(increment);
+                                        int leftOver = 3 - increment;
+                                        mPasswordView.setError("Invalid password. You have "
+                                                + String.valueOf(leftOver)
+                                                + " more attempt(s) to"
+                                                + " login.");
+                                    }
+                                }
+                            } else {
+                                mUserView.setError("Invalid username");
                             }
                             if (matched) {
+                                userViewRefInner.child("numAttempts").setValue(0);
                                 if (isAdmin) {
                                     model.setCurrentUser(refAdmin);
                                 } else {
                                     model.setCurrentUser(refHomeless);
                                 }
-                            } else {
-                                mUserView.setError("Invalid username");
-                                mPasswordView.setError("Invalid password");
                             }
                             if (model.getCurrentUser() instanceof HomelessPerson) {
                                 FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
@@ -109,28 +159,28 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         DataSnapshot currentSheltSnap = dataSnapshot.
-                                                                        child("currentShelter");
+                                                child("currentShelter");
                                         DataSnapshot numCheckedInSnap = dataSnapshot.
-                                                                        child("numberCheckedIn");
+                                                child("numberCheckedIn");
                                         DataSnapshot checkedInSnap = dataSnapshot.
-                                                                     child("checkedIn");
+                                                child("checkedIn");
 
                                         if(currentSheltSnap.getValue() == null){
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(-1);
                                         } else {
                                             int curShelt = (currentSheltSnap.
-                                                            getValue(Integer.class));
+                                                    getValue(Integer.class));
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(curShelt);
                                         }
                                         int numChecked = (numCheckedInSnap.
-                                                            getValue(Integer.class));
+                                                getValue(Integer.class));
                                         ((HomelessPerson) model.getCurrentUser()).
-                                                            setNumberCheckedIn(numChecked);
+                                                setNumberCheckedIn(numChecked);
                                         boolean isChecked = (boolean)checkedInSnap.getValue();
                                         ((HomelessPerson) model.getCurrentUser()).
-                                                            setCheckedIn(isChecked);
+                                                setCheckedIn(isChecked);
                                     }
 
                                     @Override
@@ -139,8 +189,10 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                            startActivity(intent);
+                            if (matched) {
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }
 
