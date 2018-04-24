@@ -109,13 +109,13 @@ public abstract class User {
      * getter method for whether or not the User's account is locked
      * @return boolean for whether ot not the User's account is locked or not
      */
-    public boolean getAccountState() {return accountLocked;}
+    public boolean getAccountLocked() {return accountLocked;}
 
     /**
      * setter method for whether or not the User's account is locked or not
      * @param _accountLocked boolean that either locks or unlocks the User's account
      */
-    public void setAccountState(boolean _accountLocked) {accountLocked = _accountLocked;}
+    public void setAccountLocked(boolean _accountLocked) {accountLocked = _accountLocked;}
 
     /**
      * getter method for the email of the user
