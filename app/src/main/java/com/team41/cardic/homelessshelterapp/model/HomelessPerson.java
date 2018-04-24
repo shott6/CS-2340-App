@@ -16,15 +16,16 @@ public class HomelessPerson extends User {
      * @param _username String of username of HomelessPerson(User)
      * @param _password String of password of HomelessPerson(User)
      */
-    public HomelessPerson(String _firstName, String _lastName, String _username, String _password) {
-        super(_firstName, _lastName, _username, _password, false, false);
+    public HomelessPerson(String _firstName, String _lastName, String _username, String _password,
+                          String _email) {
+        super(_firstName, _lastName, _username, _password, _email, false, false);
     }
 
     /**
      * No-arg constructor for the HomelessPerson class that generates generic info for a person
      */
     public HomelessPerson() {
-        this("Generic", "User", "username", "password");
+        this("Generic", "User", "username", "password", "");
     }
 
     /**

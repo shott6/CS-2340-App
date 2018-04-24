@@ -12,14 +12,15 @@ public class Admin extends User {
      * @param _username String of username of Admin(User)
      * @param _password String of password of Admin(User)
      */
-    public Admin(String _firstName, String _lastName, String _username, String _password) {
-        super(_firstName, _lastName, _username, _password, true, false);
+    public Admin(String _firstName, String _lastName, String _username, String _password, String
+                 _email) {
+        super(_firstName, _lastName, _username, _password, _email, true, false);
     }
 
     /**
      * No-arg constructor for the Admin class that generates generic info for a person
      */
     public Admin() {
-        this("Generic", "User", "username", "password");
+        this("Generic", "User", "username", "password", "");
     }
 }

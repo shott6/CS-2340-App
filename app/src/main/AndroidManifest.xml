@@ -17,10 +17,10 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBUivr-w1lfVCDxvXhwZOLlkMWbPFWxPU4" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity android:name=".OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +39,7 @@
             android:label="Main" />
         <activity android:name=".ShelterDetailsActivity" />
         <activity android:name=".SearchResultsActivity" />
+        <activity android:name=".ForgotPassActivity"></activity>
     </application>
 
 </manifest>

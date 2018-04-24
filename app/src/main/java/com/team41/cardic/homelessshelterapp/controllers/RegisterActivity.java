@@ -13,10 +13,8 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
-import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.User;
 
 /**
@@ -51,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText mlastName = findViewById(R.id.lastName);
                 EditText musername = findViewById(R.id.username);
                 EditText mpassword = findViewById(R.id.password);
+                EditText memail = findViewById(R.id.email_forgotten);
 
                 Editable firstNameEditable = mfirstName.getText();
                 String firstName = firstNameEditable.toString();
@@ -63,14 +62,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Editable passwordEditable = mpassword.getText();
                 String password = passwordEditable.toString();
+
+                Editable emailEditable = memail.getText();
+                String email = emailEditable.toString();
+
                 User user;
                 if (adminChecked) {
-                    user = new Admin(firstName, lastName, username, password);
+                    user = new Admin(firstName, lastName, username, password, email);
                 } else {
-                    user = new HomelessPerson(firstName, lastName, username, password);
+                    user = new HomelessPerson(firstName, lastName, username, password, email);
                 }
                 Log.d("thisone", user.toString());
-                writeNewUser(firstName, lastName, username, password);
+                writeNewUser(firstName, lastName, username, password, email);
                 Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                 startActivity(intent);
             }
@@ -86,14 +89,14 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void writeNewUser(String fName, String lName, String uName, String pWord) {
+    private void writeNewUser(String fName, String lName, String uName, String pWord, String _email) {
         DatabaseReference usersRef = mDatabase.child("users");
         DatabaseReference usernameRef = usersRef.child(uName);
         if (adminChecked) {
-            Admin toAdd = new Admin(fName, lName, uName, pWord);
+            Admin toAdd = new Admin(fName, lName, uName, pWord, _email);
             usernameRef.setValue(toAdd);
         } else {
-            HomelessPerson toAdd = new HomelessPerson(fName, lName, uName, pWord);
+            HomelessPerson toAdd = new HomelessPerson(fName, lName, uName, pWord, _email);
             usernameRef.setValue(toAdd);
             DatabaseReference curSheltRef = usernameRef.child("currentShelter");
             curSheltRef.setValue(null);

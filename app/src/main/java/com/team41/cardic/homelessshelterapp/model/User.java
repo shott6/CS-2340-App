@@ -9,6 +9,7 @@ public abstract class User {
     private String lastName;
     private String username;
     private String password;
+    private String email;
     private boolean isAdmin;
     private boolean accountLocked;
     //contactInfo
@@ -24,11 +25,12 @@ public abstract class User {
      * @param _accountLocked if the user gets rejected too many times, account becomes locked
      */
     User(String _firstName, String _lastName, String _username,
-         String _password, boolean admin, boolean _accountLocked) {
+         String _password, String _email, boolean admin, boolean _accountLocked) {
         firstName = _firstName;
         lastName = _lastName;
         username = _username;
         password = _password;
+        email = _email;
         isAdmin = admin;
         accountLocked = _accountLocked;
 
@@ -39,7 +41,7 @@ public abstract class User {
      * username: User, password: pass, not an admin, and account not locked
      */
     User() {
-        this("Generic", "User", "user", "pass", false,  false);
+        this("Generic", "User", "user", "pass", "", false,  false);
     }
     /*
      * Getters and setters
@@ -116,6 +118,14 @@ public abstract class User {
      * @param _accountLocked boolean that either locks or unlocks the User's account
      */
     public void setAccountState(boolean _accountLocked) {accountLocked = _accountLocked;}
+
+    /**
+     * getter method for the email of the user
+     * @return the email of the user
+     */
+    public String getEmail() {
+        return email;
+    }
 
 
     @Override

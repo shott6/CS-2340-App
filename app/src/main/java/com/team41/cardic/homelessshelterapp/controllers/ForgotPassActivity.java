@@ -2,72 +2,58 @@ package com.team41.cardic.homelessshelterapp.controllers;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.team41.cardic.homelessshelterapp.controllers.R;
 import com.team41.cardic.homelessshelterapp.model.Admin;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
-import com.team41.cardic.homelessshelterapp.model.Model;
 
-/**
- * A login screen that offers login via username/password.
- */
-public class LoginActivity extends AppCompatActivity {
+public class ForgotPassActivity extends AppCompatActivity {
 
+    private EditText mEmailView;
     private EditText mUserView;
-    private EditText mPasswordView;
-    private final Model model = Model.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_forgot_pass);
 
-        mUserView = findViewById(R.id.username);
-        mPasswordView = findViewById(R.id.password);
+        mUserView = findViewById(R.id.username_forgot);
+        mEmailView = findViewById(R.id.email_forgotten);
 
-
-        Button forgotpassButton = findViewById(R.id.forgot_pass);
-        forgotpassButton.setOnClickListener(new View.OnClickListener() {
+        Button sendEmailButton = findViewById(R.id.send_button);
+        sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ForgotPassActivity.class);
-                startActivity(intent);
-            }
-        });
 
-
-        Button SignInButton = findViewById(R.id.sign_in_button);
-        SignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                Editable emailViewEditable = mEmailView.getText();
+                final String emailViewString = emailViewEditable.toString();
                 Editable userViewEditable = mUserView.getText();
                 final String userViewString = userViewEditable.toString();
-                Editable passwordViewEditable = mPasswordView.getText();
-                final String passwordViewString = passwordViewEditable.toString();
 
                 FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
                 DatabaseReference dataRef = dataInstance.getReference();
                 DatabaseReference usersRef = dataRef.child("users");
-                DatabaseReference userViewRef = usersRef.child(userViewString);
+                DatabaseReference emailViewRef = usersRef.child(userViewString);
 
-                userViewRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                emailViewRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     HomelessPerson refHomeless;
                     Admin refAdmin;
-                    String uRefHomeless;
-                    String pRefHomeless;
-                    String uRefAdmin;
-                    String pRefAdmin;
+                    String emailRefHomeless;
+                    String emailRefAdmin;
+                    String uHomeless;
+                    String uAdmin;
+                    String correctPAdmin;
+                    String correctPHomeless;
                     boolean isAdmin;
                     boolean matched = false;
                     @Override
@@ -76,30 +62,36 @@ public class LoginActivity extends AppCompatActivity {
                         refAdmin = dataSnapshot.getValue(Admin.class);
                         if ((refHomeless == null) || (refAdmin == null)) {
                             mUserView.setError("Invalid username");
-                            mPasswordView.setError("Invalid password");
+                            mEmailView.setError("Invalid email.");
                         } else {
+                            emailRefAdmin = refAdmin.getEmail();
+                            emailRefHomeless = refHomeless.getEmail();
+                            uAdmin = refAdmin.getUsername();
+                            uHomeless = refHomeless.getUsername();
+                            correctPAdmin = refAdmin.getPassword();
+                            correctPHomeless = refHomeless.getPassword();
                             isAdmin = refAdmin.getAdmin();
-                            uRefAdmin = refAdmin.getUsername();
-                            pRefAdmin = refAdmin.getPassword();
-                            uRefHomeless = refHomeless.getUsername();
-                            pRefHomeless = refHomeless.getPassword();
-                            if (userViewString.equals(uRefAdmin) &&
-                                    passwordViewString.equals(pRefAdmin)) {
+                            if (emailViewString.equals(emailRefAdmin) &&
+                                    userViewString.equals(uAdmin)) {
                                 matched = true;
-                            } else if (userViewString.equals(uRefHomeless) &&
-                                        passwordViewString.equals(pRefHomeless)) {
+                            } else if (emailViewString.equals(emailRefHomeless) &&
+                                    userViewString.equals(uHomeless)) {
                                 matched = true;
                             }
                             if (matched) {
+                                TextView correctPass = (TextView)findViewById(R.id.correct_pass);
                                 if (isAdmin) {
-                                    model.setCurrentUser(refAdmin);
+                                    correctPass.setText("The correct password is " + correctPAdmin);
                                 } else {
-                                    model.setCurrentUser(refHomeless);
+                                    correctPass.setText("The correct password is " +
+                                    correctPHomeless);
                                 }
+                                correctPass.setVisibility(View.VISIBLE);
                             } else {
                                 mUserView.setError("Invalid username");
-                                mPasswordView.setError("Invalid password");
+                                mEmailView.setError("Invalid email");
                             }
+                            /*
                             if (model.getCurrentUser() instanceof HomelessPerson) {
                                 FirebaseDatabase dataInstance = FirebaseDatabase.getInstance();
                                 DatabaseReference dataRef = dataInstance.getReference();
@@ -109,28 +101,28 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         DataSnapshot currentSheltSnap = dataSnapshot.
-                                                                        child("currentShelter");
+                                                child("currentShelter");
                                         DataSnapshot numCheckedInSnap = dataSnapshot.
-                                                                        child("numberCheckedIn");
+                                                child("numberCheckedIn");
                                         DataSnapshot checkedInSnap = dataSnapshot.
-                                                                     child("checkedIn");
+                                                child("checkedIn");
 
                                         if(currentSheltSnap.getValue() == null){
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(-1);
                                         } else {
                                             int curShelt = (currentSheltSnap.
-                                                            getValue(Integer.class));
+                                                    getValue(Integer.class));
                                             ((HomelessPerson) model.getCurrentUser()).
                                                     setCurrentShelter(curShelt);
                                         }
                                         int numChecked = (numCheckedInSnap.
-                                                            getValue(Integer.class));
+                                                getValue(Integer.class));
                                         ((HomelessPerson) model.getCurrentUser()).
-                                                            setNumberCheckedIn(numChecked);
+                                                setNumberCheckedIn(numChecked);
                                         boolean isChecked = (boolean)checkedInSnap.getValue();
                                         ((HomelessPerson) model.getCurrentUser()).
-                                                            setCheckedIn(isChecked);
+                                                setCheckedIn(isChecked);
                                     }
 
                                     @Override
@@ -138,9 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     }
                                 });
-                            }
-                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                            startActivity(intent);
+                            } */
                         }
                     }
 
@@ -157,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
