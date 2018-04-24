@@ -1,7 +1,7 @@
 package com.team41.cardic.homelessshelterapp.model;
 
 /**
- * Created by shott on 2/20/18.
+ * Object that stores info and methods relevant to an Admin user
  */
 
 public class HomelessPerson extends User {

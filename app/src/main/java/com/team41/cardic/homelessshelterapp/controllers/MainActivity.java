@@ -56,13 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         searchBar = findViewById(R.id.search_Bar);
         errorView = findViewById(R.id.errorView);
-        if (!model.getReadData()) {
+        /*if (!model.getReadData()) {
             this.readShelterFile();
-        } else {
+        } else {*/
+        this.readShelterFile();
             for (int i = 0; i < modelSheltersSize; i++) {
                 Shelter currentModelShelter = modelShelters.get(i);
                 shelterNames.add(currentModelShelter.getName());
-            }
+           // }
         }
 
         Button logoutButton = findViewById(R.id.logout_button);
@@ -168,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             InputStream is = getResources().openRawResource(R.raw.homeless_shelter_database);
             BufferedReader br=new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            br.readLine();
             String line = br.readLine();
-            line = br.readLine();
             Log.d("Main", "this is line" + line);
 
 
@@ -221,43 +222,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-                    /*for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        String key = (String) ds.getKey();
-
-                        DatabaseReference keyReference = FirebaseDatabase.getInstance().
-                        getReference().child("shelters").child(key);
-                        keyReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                int id = Integer.parseInt(tokens[0]);
-                                double longitude = Double.parseDouble(tokens[4]);
-                                double latitude = Double.parseDouble(tokens[5]);
-                                String cap = "" + dataSnapshot.child("Capacity").getValue();
-                                Shelter shelter = new Shelter(id, tokens[1], cap, tokens[3],
-                                longitude, latitude, tokens[7], tokens[6], tokens[8]);
-                                Log.d("lookhere", shelter.toString());
-                                shelters.add(shelter);
-                                Log.d("letssee", shelters.toString());
-                                Log.d("working", shelterNames.toString());
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-                } catch (IOException e) {
-                    Log.e("Main", "error reading assets", e);
-                }
-            }
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
-              }
-        });
-        for (int i = 0; i < model.getShelters().size(); i++) {
-            shelterNames.add(model.getShelters().get(i).getName());
-            Log.d("working", shelterNames.toString());
-        }*/
-
 }

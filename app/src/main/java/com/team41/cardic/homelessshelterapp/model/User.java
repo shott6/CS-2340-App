@@ -1,7 +1,7 @@
 package com.team41.cardic.homelessshelterapp.model;
 
 /**
- * Created by shott on 2/20/18.
+ * Abstract class that has info and methods relevant to all types of users
  */
 
 public abstract class User {
@@ -12,8 +12,6 @@ public abstract class User {
     private String email;
     private boolean isAdmin;
     private boolean accountLocked;
-    //contactInfo
-
 
     /**
      *
