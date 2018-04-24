@@ -12,6 +12,7 @@ public abstract class User {
     private String email;
     private boolean isAdmin;
     private boolean accountLocked;
+    private int numAttempts;
 
     /**
      *
@@ -21,9 +22,10 @@ public abstract class User {
      * @param _password desired password for the user
      * @param admin whether the user is an admin or not
      * @param _accountLocked if the user gets rejected too many times, account becomes locked
+     * @param _numAttempts number of unsuccessful login attempts by User
      */
     User(String _firstName, String _lastName, String _username,
-         String _password, String _email, boolean admin, boolean _accountLocked) {
+         String _password, String _email, boolean admin, boolean _accountLocked, int _numAttempts) {
         firstName = _firstName;
         lastName = _lastName;
         username = _username;
@@ -31,15 +33,17 @@ public abstract class User {
         email = _email;
         isAdmin = admin;
         accountLocked = _accountLocked;
+        numAttempts = _numAttempts;
 
     }
 
     /**
      * No-Arg constructor that creates a user with name being "Generic User",
-     * username: User, password: pass, not an admin, and account not locked
+     * username: User, password: pass, not an admin, account not locked,
+     * and number of login attempts at 0
      */
     User() {
-        this("Generic", "User", "user", "pass", "", false,  false);
+        this("Generic", "User", "user", "pass", "", false,  false, 0);
     }
     /*
      * Getters and setters
@@ -124,6 +128,18 @@ public abstract class User {
     public String getEmail() {
         return email;
     }
+
+    /**
+     * getter method for number of unsuccessful login attempts a user has
+     * @return int of number of login attempts
+     */
+    public int getNumAttempts() {return numAttempts;}
+
+    /**
+     * setter method for number of unsuccessful login attempts a user has
+     * @param _numAttempts int of number of login attempts
+     */
+    public void setNumAttempts(int _numAttempts) {numAttempts = _numAttempts;}
 
 
     @Override
