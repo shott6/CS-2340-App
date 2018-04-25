@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 adminChecked = ((CheckBox) view).isChecked();
             }
-                                 });
+        });
 
         Button RegisterButton = findViewById(R.id.RegisterButton);
         RegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText musername = findViewById(R.id.username);
                 EditText mpassword = findViewById(R.id.password);
                 EditText memail = findViewById(R.id.email_forgotten);
+                EditText madminKey = findViewById(R.id.adminKey);
 
                 Editable firstNameEditable = mfirstName.getText();
                 String firstName = firstNameEditable.toString();
@@ -66,16 +67,27 @@ public class RegisterActivity extends AppCompatActivity {
                 Editable emailEditable = memail.getText();
                 String email = emailEditable.toString();
 
-                User user;
-                if (adminChecked) {
-                    user = new Admin(firstName, lastName, username, password, email);
+                Editable adminKeyEditable = madminKey.getText();
+                String adminKey = adminKeyEditable.toString();
+
+                if (adminKey != null) {
+                    if (adminKey.equals("8u42") && adminChecked) {
+                        writeNewUser(firstName, lastName, username, password, email);
+                    } else {
+                        madminKey.setError("The authentication key you have entered is incorrect."
+                        + " Either uncheck the Admin box and leave this field blank or"
+                        + " re-enter the correct authentication key and make sure to check"
+                        + " the Admin box.");
+                    }
+                } else if ((adminKey == null) && adminChecked) {
+                    madminKey.setError("Please enter an authentication key.");
                 } else {
-                    user = new HomelessPerson(firstName, lastName, username, password, email);
+                    writeNewUser(firstName, lastName, username, password, email);
                 }
-                Log.d("thisone", user.toString());
-                writeNewUser(firstName, lastName, username, password, email);
-                Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
-                startActivity(intent);
+                if ((adminKey.equals("8u42") && adminChecked) || (adminKey == null && !adminChecked)) {
+                    Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

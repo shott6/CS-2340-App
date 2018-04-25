@@ -1,12 +1,11 @@
-<android.support.constraint.ConstraintLayout
-    tools:context="com.team41.cardic.homelessshelterapp.controllers.RegisterActivity"
-    android:gravity="center_horizontal"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:id="@+id/linearLayout"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context="com.team41.cardic.homelessshelterapp.controllers.RegisterActivity">
 
     <!-- Login progress -->
 
@@ -127,5 +126,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <EditText
+        android:id="@+id/adminKey"
+        android:layout_width="200dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:hint="Admin Key"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/firstName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toEndOf="@+id/adminCheckbox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592" />
 
 </android.support.constraint.ConstraintLayout>
