@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     writeNewUser(firstName, lastName, username, password, email);
                 }
-                if ((adminKey.equals("8u42") && adminChecked) || (adminKey == null && !adminChecked)) {
+                if ((adminKey.equals("8u42") && adminChecked) || (adminKey.equals("") && !adminChecked)) {
                     Intent intent = new Intent(getBaseContext(), OpeningActivity.class);
                     startActivity(intent);
                 }
