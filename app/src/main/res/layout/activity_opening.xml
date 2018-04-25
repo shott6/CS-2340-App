@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android=
-                                                    "http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,9 +20,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.371"
+        app:layout_constraintVertical_bias="0.958"
         tools:text="Login" />
 
     <Button
@@ -38,9 +38,37 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738"
+        app:layout_constraintVertical_bias="0.933"
         tools:text="Register" />
+
+    <ImageView
+        android:id="@+id/helping_hands"
+        android:layout_width="259dp"
+        android:layout_height="469dp"
+        app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/helping_hands" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="309dp"
+        android:layout_height="70dp"
+        android:text="Helping Hands is an app that helps the less fortunate homeless people locate shelters near them based on demographics."
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/helping_hands"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helping_hands"
+        app:layout_constraintVertical_bias="0.217"
+        tools:textAlignment="center"
+        tools:textColor="@color/com_facebook_messenger_blue" />
+
 </android.support.constraint.ConstraintLayout>
