@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Editable adminKeyEditable = madminKey.getText();
                 String adminKey = adminKeyEditable.toString();
 
-                if (adminKey != null) {
+                if (!adminKey.equals("")) {
                     if (adminKey.equals("8u42") && adminChecked) {
                         writeNewUser(firstName, lastName, username, password, email);
                     } else {
@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                         + " re-enter the correct authentication key and make sure to check"
                         + " the Admin box.");
                     }
-                } else if ((adminKey == null) && adminChecked) {
+                } else if ((adminKey.equals("")) && adminChecked) {
                     madminKey.setError("Please enter an authentication key.");
                 } else {
                     writeNewUser(firstName, lastName, username, password, email);
