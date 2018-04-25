@@ -48,12 +48,12 @@
         android:id="@+id/helping_hands"
         android:layout_width="259dp"
         android:layout_height="469dp"
+        android:contentDescription="picture of app logo"
         app:layout_constraintBottom_toTopOf="@+id/LoginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/helping_hands" />
 
     <TextView
@@ -61,14 +61,13 @@
         android:layout_width="309dp"
         android:layout_height="70dp"
         android:text="Helping Hands is an app that helps the less fortunate homeless people locate shelters near them based on demographics."
+        android:textAlignment="center"
+        android:textColor="@color/com_facebook_messenger_blue"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/helping_hands"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helping_hands"
-        app:layout_constraintVertical_bias="0.217"
-        tools:textAlignment="center"
-        tools:textColor="@color/com_facebook_messenger_blue" />
+        app:layout_constraintVertical_bias="0.198" />
 
 </android.support.constraint.ConstraintLayout>
