@@ -30,8 +30,8 @@ public class UnbanPageActivity extends AppCompatActivity {
 
         unbanView = findViewById(R.id.unbanID);
 
-        Button unBanButton = findViewById(R.id.UnbanHammer);
-        unBanButton.setOnClickListener(new View.OnClickListener() {
+        Button unbanButton = findViewById(R.id.UnbanHammer);
+        unbanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Editable userViewEditable = unbanView.getText();

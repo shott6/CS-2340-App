@@ -30,5 +30,14 @@ public class AdminPageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

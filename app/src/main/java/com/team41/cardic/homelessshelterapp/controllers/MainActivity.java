@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.team41.cardic.homelessshelterapp.model.HomelessPerson;
 import com.team41.cardic.homelessshelterapp.model.Model;
 import com.team41.cardic.homelessshelterapp.model.Shelter;
+import com.team41.cardic.homelessshelterapp.model.Admin;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -183,6 +184,21 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getBaseContext(), ShelterDetailsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button adminButton = findViewById(R.id.admin_tools);
+        adminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (model.getCurrentUser() instanceof Admin) {
+                    Intent intent = new Intent(getBaseContext(), AdminPageActivity.class);
+                    startActivity(intent);
+                } else {
+                    errorView.setVisibility(View.VISIBLE);
+                    errorView.setError("Sorry, you cannot access this page. This"
+                    + " feature is only for system administrators.");
+                }
             }
         });
 
