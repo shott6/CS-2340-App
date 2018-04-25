@@ -62,7 +62,9 @@
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".AdminPageActivity" />
         <activity android:name=".BanPageActivity" />
-        <activity android:name=".UnbanPageActivity"></activity>
+        <activity android:name=".UnbanPageActivity" />
+        <activity android:name=".BanSuccessActivity" />
+        <activity android:name=".UnbanSuccess"></activity>
     </application>
 
 </manifest>

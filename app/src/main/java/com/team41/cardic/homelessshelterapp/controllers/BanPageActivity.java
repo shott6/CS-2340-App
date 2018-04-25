@@ -73,7 +73,7 @@ public class BanPageActivity extends AppCompatActivity {
                                 banView.setError("Invalid username");
                             }
                             if (matched) {
-                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                Intent intent = new Intent(getBaseContext(), BanSuccessActivity.class);
                                 startActivity(intent);
                             }
                         }

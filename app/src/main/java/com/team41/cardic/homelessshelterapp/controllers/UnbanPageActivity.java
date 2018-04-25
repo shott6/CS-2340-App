@@ -74,7 +74,7 @@ public class UnbanPageActivity extends AppCompatActivity {
                                 unbanView.setError("Invalid username");
                             }
                             if (matched) {
-                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                Intent intent = new Intent(getBaseContext(), UnbanSuccess.class);
                                 startActivity(intent);
                             }
                         }
